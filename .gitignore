@@ -45,3 +45,14 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#User ignored files.
+*.log
+
+#Folder user exclusions.
+msvc/*
+bin/Debug
+bin/Release
+!msvc/VendingMachineKata.sln
+!msvc/VendingMachineKata.vcxproj
+!msvc/VendingMachineKata.vcxproj.filters
