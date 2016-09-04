@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Production|Win32">
+      <Configuration>Production</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BF0CECC6-081C-4A4E-9F10-E00A2CA53E27}</ProjectGuid>
+    <RootNamespace>VendingMachineKata</RootNamespace>
+    <ProjectName>VendingMachineKata</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Production|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Production|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\..\bin\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)/../third_party_software/jsoncpp;$(SolutionDir)/../third_party_software/googletest;$(SolutionDir)/../include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)/../source;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)/../third_party_software/jsoncpp;$(SolutionDir)/../third_party_software/googletest;$(SolutionDir)/../include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)/../source;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)\..\bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Production|Win32'">
+    <IncludePath>$(SolutionDir)/../third_party_software/jsoncpp;$(SolutionDir)/../third_party_software/googletest;$(SolutionDir)/../include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)/../source;$(SourcePath)</SourcePath>
+    <OutDir>$(SolutionDir)\..\bin\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Production|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ProgramDatabaseFile>$(TargetDir)/DeliverableSymbols/$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\main.cpp" />
+    <ClCompile Include="..\third_party_software\googletest\gtest-all.cc" />
+    <ClCompile Include="..\third_party_software\jsoncpp\json_reader.cpp" />
+    <ClCompile Include="..\third_party_software\jsoncpp\json_value.cpp" />
+    <ClCompile Include="..\third_party_software\jsoncpp\json_writer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\main.hpp" />
+    <ClInclude Include="..\third_party_software\googletest\gtest-internal-inl.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-death-test.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-message.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-param-test.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-printers.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-spi.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-test-part.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-typed-test.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest_pred_impl.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest_prod.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\custom\gtest-port.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\custom\gtest-printers.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\custom\gtest.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-death-test-internal.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-filepath.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-internal.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-linked_ptr.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-param-util-generated.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-param-util.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-port-arch.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-port.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-string.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-tuple.h" />
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-type-util.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\autolink.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\config.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\features.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\forwards.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\json.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\reader.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\value.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json\writer.h" />
+    <ClInclude Include="..\third_party_software\jsoncpp\json_batchallocator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\third_party_software\googletest\LICENSE" />
+    <None Include="..\third_party_software\jsoncpp\json_internalarray.inl" />
+    <None Include="..\third_party_software\jsoncpp\json_internalmap.inl" />
+    <None Include="..\third_party_software\jsoncpp\json_valueiterator.inl" />
+    <None Include="..\third_party_software\jsoncpp\LICENSE" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

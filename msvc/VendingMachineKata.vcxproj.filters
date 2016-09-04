@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{e43e0a12-2e4a-4333-851d-ec5b1b52b294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{5471ffd4-9135-47dc-8e1c-6dfcff77b4b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Third_Party_Libraries">
+      <UniqueIdentifier>{84903712-acea-4066-8fcd-b6e26d7ec233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Third_Party_Libraries\GoogleTest">
+      <UniqueIdentifier>{a81def42-3d6d-4d46-b201-f702cef6353c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Third_Party_Libraries\JsonCpp">
+      <UniqueIdentifier>{53b0d2dd-0e54-4a00-b90c-41e5efc40d6a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party_software\googletest\gtest-all.cc">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party_software\jsoncpp\json_reader.cpp">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party_software\jsoncpp\json_value.cpp">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party_software\jsoncpp\json_writer.cpp">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-death-test-internal.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-death-test.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-filepath.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest-internal-inl.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-internal.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-linked_ptr.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-message.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-param-test.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-param-util-generated.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-param-util.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-port-arch.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\custom\gtest-port.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-port.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-printers.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\custom\gtest-printers.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-spi.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-string.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-test-part.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-tuple.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-type-util.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest-typed-test.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\internal\custom\gtest.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest_pred_impl.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\googletest\gtest\gtest_prod.h">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\autolink.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\writer.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\config.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\features.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\forwards.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\json.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json_batchallocator.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\reader.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party_software\jsoncpp\json\value.h">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\main.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\third_party_software\googletest\LICENSE">
+      <Filter>_Third_Party_Libraries\GoogleTest</Filter>
+    </None>
+    <None Include="..\third_party_software\jsoncpp\json_internalarray.inl">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </None>
+    <None Include="..\third_party_software\jsoncpp\json_internalmap.inl">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </None>
+    <None Include="..\third_party_software\jsoncpp\json_valueiterator.inl">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </None>
+    <None Include="..\third_party_software\jsoncpp\LICENSE">
+      <Filter>_Third_Party_Libraries\JsonCpp</Filter>
+    </None>
+  </ItemGroup>
+</Project>
