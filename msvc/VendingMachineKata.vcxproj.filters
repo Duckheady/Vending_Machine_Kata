@@ -42,6 +42,12 @@
     <ClCompile Include="..\source\EventSystem.cpp">
       <Filter>Source\EventSystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Currency.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\CurrencyManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\third_party_software\googletest\gtest\internal\gtest-death-test-internal.h">
@@ -160,6 +166,18 @@
     </ClInclude>
     <ClInclude Include="..\include\Event.hpp">
       <Filter>Headers\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CurrencyEvents.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CurrencyTests.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CurrencyManager.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Currency.hpp">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
