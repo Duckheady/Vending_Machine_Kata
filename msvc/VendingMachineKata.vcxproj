@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\EventSystem.cpp" />
     <ClCompile Include="..\source\main.cpp" />
     <ClCompile Include="..\third_party_software\googletest\gtest-all.cc" />
     <ClCompile Include="..\third_party_software\jsoncpp\json_reader.cpp" />
@@ -110,7 +111,11 @@
     <ClCompile Include="..\third_party_software\jsoncpp\json_writer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\Event.hpp" />
+    <ClInclude Include="..\include\EventSystem.hpp" />
+    <ClInclude Include="..\include\EventSystemTests.hpp" />
     <ClInclude Include="..\include\main.hpp" />
+    <ClInclude Include="..\include\TypeId.hpp" />
     <ClInclude Include="..\third_party_software\googletest\gtest-internal-inl.h" />
     <ClInclude Include="..\third_party_software\googletest\gtest\gtest-death-test.h" />
     <ClInclude Include="..\third_party_software\googletest\gtest\gtest-message.h" />

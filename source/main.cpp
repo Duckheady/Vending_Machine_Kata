@@ -2,10 +2,15 @@
 #include "main.hpp"
 #include "gtest/gtest.h"
 #include "json/json.h"
+#include "TypeId.hpp"
 #include <string>
-#include <objbase.h>
 #include <iostream>
 /***/
+/*Defines the static function counter for types*/
+static TYPEID type_id_counter = 0;
+TYPEID GetNextUniqueId() { return ++type_id_counter; }
+/****/
+#include "EventSystemTests.hpp"
 
 TEST(ThirdPartyLibrariesWork, Simple)
 {
