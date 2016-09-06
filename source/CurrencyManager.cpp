@@ -4,7 +4,7 @@
 #include "EventSystem.hpp"
 #include <json\reader.h>
 /*TODO: Put valid throw message*/
-CurrencyManager::CurrencyManager(std::istream& currencyDefinitions)
+CurrencyManager::CurrencyManager(std::ifstream& currencyDefinitions)
 {
   Json::Reader reader;
   Json::Value root;
@@ -15,9 +15,10 @@ CurrencyManager::CurrencyManager(std::istream& currencyDefinitions)
       throw;
     for(unsigned i = 0; i < root.size(); ++i)
     {
-      if(!root[i].isObject() && !root[i].isMember("type"))
+      if(!root[i].isObject() && root[i].isMember("type"))
         throw; /*Warnings would probally be better, but this is fine for now*/
-      if(root[i]["type"] == "Coin")
+      /*Could define meta meta files but it seems like overkill for now*/
+      if(root[i]["type"].asString() == "Coin")
       {
         CurrencyTemplate* newCurrency = new CoinTemplate(root[i]);
         currencyTemplates.push_back(newCurrency);
@@ -45,6 +46,7 @@ void CurrencyManager::OnCurrencyEntered(const Event* e)
     {
       CurrencyTaken currencyTaken(currencyTemplates[i]->GetCurrencyValue());
       SendEvent(currencyTaken);
+      return;
     }
   }
   CurrencyRejected currencyRejected;

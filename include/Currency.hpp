@@ -5,8 +5,8 @@ class CurrencyTemplate
 {
 public:
   virtual ~CurrencyTemplate() {}
-  virtual bool TestValidity(const Json::Value& abstractObject) = 0;
-  virtual float GetCurrencyValue() = 0;
+  virtual bool TestValidity(const Json::Value& abstractObject) const = 0;
+  virtual float GetCurrencyValue() const = 0;
 };
 
 /*Defining what a coin means, ask client what exactly should
@@ -22,8 +22,8 @@ class CoinTemplate : public CurrencyTemplate
 public:
   CoinTemplate(const Json::Value& dataTemplate);
   ~CoinTemplate() {}
-  bool TestValidity(const Json::Value& mysteryCurrency);
-  float GetCurrencyValue();
+  bool TestValidity(const Json::Value& mysteryCurrency) const;
+  float GetCurrencyValue() const;
 };
 
 /*Addition of more currency types would go here*/

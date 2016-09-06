@@ -63,7 +63,7 @@ public:
 /*Defines a regular function / functor / lambda function for use in event system*/
 #define RegisterNormalCallback(EventType, CallbackEvent) \
   { \
-    CallbackPackage* newCallback = new NormalCallback(CallbackEvent); \
+  CallbackPackage* newCallback = new NormalCallback(CallbackEvent); \
     EventSystem::GetInstance()->RegisterCallbackPackage(TYPE_ID(EventType), newCallback); \
   }
 

@@ -1,0 +1,26 @@
+[
+  {
+    "radiusErrorPercentage": 0.01,
+    "weightErrorPercentage": 0.02,
+    "radius": 0.12,
+    "type": "Coin",
+    "value": 0.1,
+    "weight": 2.25
+  },
+  {
+    "radiusErrorPercentage": 0.001,
+    "weightErrorPercentage": 0.002,
+    "radius": 0.5,
+    "type": "Coin",
+    "value": 0.25,
+    "weight": 12.5
+  },
+  {
+    "radiusErrorPercentage": 0.003,
+    "weightErrorPercentage": 0.004,
+    "radius": 0.3,
+    "type": "Coin",
+    "value": 0.05,
+    "weight": 4.5
+  }
+]

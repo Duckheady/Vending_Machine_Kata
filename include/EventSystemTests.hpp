@@ -1,7 +1,6 @@
 #pragma once
 
 #include "gtest/gtest.h"
-#include "json/json.h"
 #include "Event.hpp"
 #include "EventSystem.hpp"
 #include <string>

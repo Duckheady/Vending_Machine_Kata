@@ -11,7 +11,7 @@ CoinTemplate::CoinTemplate(const Json::Value& dataTemplate)
 
 /*Bit of a violation of DRY, but it is only 2 values. If more, it would be good to abstract out the values and
   iterate through them.*/
-bool CoinTemplate::TestValidity(const Json::Value& mysteryCurrency)
+bool CoinTemplate::TestValidity(const Json::Value& mysteryCurrency) const
 {
   float testValue = mysteryCurrency["weight"].asFloat();
   if( (testValue < weight - weight*weightErr) || (testValue > weight + weight*weightErr) )
@@ -22,7 +22,7 @@ bool CoinTemplate::TestValidity(const Json::Value& mysteryCurrency)
   return true;
 }
 
-float CoinTemplate::GetCurrencyValue()
+float CoinTemplate::GetCurrencyValue() const
 {
   return value;
 }

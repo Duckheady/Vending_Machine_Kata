@@ -196,5 +196,6 @@
     <None Include="..\third_party_software\jsoncpp\LICENSE">
       <Filter>_Third_Party_Libraries\JsonCpp</Filter>
     </None>
+    <None Include="..\bin\testCurrencies.json" />
   </ItemGroup>
 </Project>

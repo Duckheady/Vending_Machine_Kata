@@ -158,6 +158,7 @@
     <ClInclude Include="..\third_party_software\jsoncpp\json_batchallocator.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\bin\testCurrencies.json" />
     <None Include="..\third_party_software\googletest\LICENSE" />
     <None Include="..\third_party_software\jsoncpp\json_internalarray.inl" />
     <None Include="..\third_party_software\jsoncpp\json_internalmap.inl" />
