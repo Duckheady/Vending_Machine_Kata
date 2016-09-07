@@ -5,7 +5,7 @@
     "radius": 0.12,
     "type": "Coin",
     "value": 0.1,
-    "numberOfCoins" : 20,
+    "numberOfCoins" : 6,
     "dispenserId" : 0,
     "weight": 2.25
   },
@@ -15,7 +15,7 @@
     "radius": 0.5,
     "type": "Coin",
     "value": 0.25,
-    "numberOfCoins" : 100,
+    "numberOfCoins" : 0,
     "dispenserId" : 1,
     "weight": 12.5
   },
@@ -25,7 +25,7 @@
     "radius": 0.3,
     "type": "Coin",
     "value": 0.05,
-    "numberOfCoins" : 20,
+    "numberOfCoins" : 1,
     "dispenserId" : 2,
     "weight": 4.5
   }

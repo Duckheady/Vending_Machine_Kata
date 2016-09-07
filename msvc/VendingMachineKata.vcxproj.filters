@@ -28,6 +28,12 @@
     <Filter Include="Source\CurrencyManager">
       <UniqueIdentifier>{bd8cc50d-b8dd-4c73-b54d-e1df3242f435}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\ConsoleManager">
+      <UniqueIdentifier>{85b827bc-0c9c-44f0-a018-da1c51324ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\ConsoleManager">
+      <UniqueIdentifier>{b4ae64ce-61dd-43cf-8ee9-5c063e59cd4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp">
@@ -55,6 +61,9 @@
       <Filter>Source\CurrencyManager</Filter>
     </ClCompile>
     <ClCompile Include="..\include\ConsoleManager.cpp">
+      <Filter>Source\ConsoleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\CoinDispenser.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,16 +197,22 @@
     <ClInclude Include="..\include\CurrencyManager.hpp">
       <Filter>Headers\CurrencyManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ConsoleManager.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ConsoleEvents.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\DispenserEvents.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ConsoleEvents.hpp">
+      <Filter>Headers\ConsoleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ConsoleManager.hpp">
+      <Filter>Headers\ConsoleManager</Filter>
+    </ClInclude>
     <ClInclude Include="..\include\ConsoleManagerTests.hpp">
+      <Filter>Headers\ConsoleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CoinDispenser.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CoinDispenserTests.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

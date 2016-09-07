@@ -50,7 +50,7 @@ TEST(ConsoleManagerTests, VerifiedCoinTests)
   std::ifstream stream("testItems.json");
   std::vector<float> items;
   ConsoleManager mgr(stream);
-  CurrencyTaken addCurrency(.05f);
+  CurrencyTaken addCurrency(.05f, TYPE_ID(CoinTemplate));
   CurrencyRejected rejectCur;
   SendEvent(addCurrency);
   EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), .05f);
@@ -102,7 +102,7 @@ TEST(ConsoleManagerTests, SelectItemTests)
       }
     );
    /*Valid selection test*/
-   CurrencyTaken addCurrency(1.50);
+   CurrencyTaken addCurrency(1.50, TYPE_ID(CoinTemplate));
    ChooseItemEvent itemChoice(0);
    SendEvent(addCurrency);
    SendEvent(itemChoice);
@@ -183,7 +183,7 @@ TEST(ConsoleManagerTests, CoinReturnTests)
       }
     );
   /*Simple adds, then returns*/
-  CurrencyTaken addCurrency(1.50);
+  CurrencyTaken addCurrency(1.50, TYPE_ID(CoinTemplate));
   ChooseChangeReturn changeReturn;
   SendEvent(addCurrency);
   SendEvent(changeReturn);

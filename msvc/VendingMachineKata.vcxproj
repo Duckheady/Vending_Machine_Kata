@@ -103,6 +103,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\include\CoinDispenser.cpp" />
     <ClCompile Include="..\include\ConsoleManager.cpp" />
     <ClCompile Include="..\source\Currency.cpp" />
     <ClCompile Include="..\source\CurrencyManager.cpp" />
@@ -114,6 +115,8 @@
     <ClCompile Include="..\third_party_software\jsoncpp\json_writer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\CoinDispenser.hpp" />
+    <ClInclude Include="..\include\CoinDispenserTests.hpp" />
     <ClInclude Include="..\include\ConsoleEvents.hpp" />
     <ClInclude Include="..\include\ConsoleManager.hpp" />
     <ClInclude Include="..\include\ConsoleManagerTests.hpp" />

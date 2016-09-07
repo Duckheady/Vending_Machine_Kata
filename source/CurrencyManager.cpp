@@ -45,7 +45,7 @@ void CurrencyManager::OnCurrencyEntered(const Event* e)
   {
     if(currencyTemplates[i]->TestValidity(newCurrency->coinData))
     {
-      CurrencyTaken currencyTaken(currencyTemplates[i]->GetCurrencyValue());
+      CurrencyTaken currencyTaken(currencyTemplates[i]->GetCurrencyValue(), currencyTemplates[i]->TypeId());
       SendEvent(currencyTaken);
       return;
     }

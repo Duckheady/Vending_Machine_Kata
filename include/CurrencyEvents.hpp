@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.hpp"
+#include "TypeId.hpp"
 #include <json\value.h>
 
 /*Bit of lazyness here just so I don't need to make getters/setters,
@@ -19,7 +20,8 @@ class CurrencyTaken : public Event
 {
 public:
   float valueOfCurrency;
-  CurrencyTaken(float value) : Event(TYPE_ID(CurrencyTaken)), valueOfCurrency(value) {}
+  TYPEID typeId;
+  CurrencyTaken(float value, TYPEID id) : Event(TYPE_ID(CurrencyTaken)), valueOfCurrency(value), typeId(id) {}
 };
 
 class CurrencyRejected : public Event
