@@ -48,7 +48,7 @@ namespace CurrencyTests
   }
 }
 
-TEST(CurrencyTests, TemplateCoinLoadingTests)
+TEST(CurrencyTests, TemplateCoinLoadingTest)
 {
   Json::Value root;
   std::ifstream stream("testCurrencies.json");
@@ -107,7 +107,6 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   stream.clear();
   stream.seekg(0, std::ios::beg);
   CurrencyManager currencyManager(stream);
-  currencyManager.RegisterEvents();
   bool tookCurrency = false;
   float valueOfCurrency = 0;
   RegisterNormalCallback
@@ -226,4 +225,5 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   EXPECT_FALSE(tookCurrency);
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[2], "weight", -noise);
   EXPECT_FALSE(tookCurrency);
+  EventSystem::Teardown();
 }

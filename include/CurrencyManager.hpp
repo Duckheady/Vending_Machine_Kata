@@ -9,8 +9,9 @@ class CurrencyManager
   std::vector<CurrencyTemplate*> currencyTemplates;
 
   void OnCurrencyEntered(const Event* e);
+  void RegisterEvents();
 public:
   CurrencyManager(std::ifstream& currencyDefinitions);
   ~CurrencyManager();
-  void RegisterEvents();
+  
 };

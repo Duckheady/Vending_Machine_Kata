@@ -24,6 +24,7 @@ CurrencyManager::CurrencyManager(std::ifstream& currencyDefinitions)
         currencyTemplates.push_back(newCurrency);
       }
     }
+    RegisterEvents();
   }
   else
     throw;

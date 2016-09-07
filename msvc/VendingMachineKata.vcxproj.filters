@@ -22,6 +22,12 @@
     <Filter Include="Source\EventSystem">
       <UniqueIdentifier>{7455020e-eca5-43b2-8367-1826b3940142}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\CurrencyManager">
+      <UniqueIdentifier>{9995670c-f24d-4e2d-a9b8-e2cc5ffb640c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CurrencyManager">
+      <UniqueIdentifier>{bd8cc50d-b8dd-4c73-b54d-e1df3242f435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp">
@@ -43,9 +49,12 @@
       <Filter>Source\EventSystem</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Currency.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\CurrencyManager</Filter>
     </ClCompile>
     <ClCompile Include="..\source\CurrencyManager.cpp">
+      <Filter>Source\CurrencyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\ConsoleManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,16 +176,28 @@
     <ClInclude Include="..\include\Event.hpp">
       <Filter>Headers\EventSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\CurrencyEvents.hpp">
-      <Filter>Headers</Filter>
+    <ClInclude Include="..\include\Currency.hpp">
+      <Filter>Headers\CurrencyManager</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CurrencyTests.hpp">
-      <Filter>Headers</Filter>
+      <Filter>Headers\CurrencyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CurrencyEvents.hpp">
+      <Filter>Headers\CurrencyManager</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CurrencyManager.hpp">
+      <Filter>Headers\CurrencyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ConsoleManager.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Currency.hpp">
+    <ClInclude Include="..\include\ConsoleEvents.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DispenserEvents.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ConsoleManagerTests.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
