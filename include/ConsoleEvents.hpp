@@ -21,3 +21,10 @@ public:
   float priceOfItem;
   NotEnoughMoneyEvent(float price) : Event(TYPE_ID(NotEnoughMoneyEvent)), priceOfItem(price) {}
 };
+
+class SoldOutEvent : public Event
+{
+public:
+  unsigned indexSoldOut;
+  SoldOutEvent(unsigned soldOutIndex) : Event(TYPE_ID(SoldOutEvent)), indexSoldOut(soldOutIndex) {}
+};

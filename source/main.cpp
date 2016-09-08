@@ -14,6 +14,7 @@ TYPEID GetNextUniqueId() { return ++type_id_counter; }
 #include "CurrencyTests.hpp"
 #include "ConsoleManagerTests.hpp"
 #include "CoinDispenserTests.hpp"
+#include "DisplayManagertests.hpp"
 
 
 

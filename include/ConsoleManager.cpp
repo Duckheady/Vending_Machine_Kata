@@ -5,9 +5,17 @@
 #include "EventSystem.hpp"
 #include "CurrencyEvents.hpp"
 
+ConsoleManager::Item::Item(const Json::Value& value)
+{
+  //assert(value["cost"].isMember("cost"));
+  //assert(value["quantity"].isMember("quantity"));
+  price = value["cost"].asFloat();
+  quantity = value["quantity"].asUInt();
+}
 ConsoleManager::ConsoleManager(std::istream& stream)
 {
   currentAmountInserted = 0;
+  exactChangeOnly = false;
   Json::Reader reader;
   Json::Value root;
   bool isGood = reader.parse(stream, root);
@@ -17,7 +25,7 @@ ConsoleManager::ConsoleManager(std::istream& stream)
       throw;
     for(unsigned i = 0; i < root.size(); ++i)
     {
-      itemPrices.push_back(root[i]["cost"].asFloat());
+      items.push_back(Item(root[i]));
     }
   }
   RegisterEvents();
@@ -28,6 +36,7 @@ void ConsoleManager::RegisterEvents()
   RegisterClassCallback(ChooseItemEvent, *this, ConsoleManager, OnItemChosen);
   RegisterClassCallback(ChooseChangeReturn, *this, ConsoleManager, OnCoinReturn);
   RegisterClassCallback(CurrencyTaken, *this, ConsoleManager, OnCurrencyEntered);
+  RegisterClassCallback(ExactChangeEvent, *this, ConsoleManager, OnExactChange);
 }
 
 void ConsoleManager::OnCurrencyEntered(const Event* e)
@@ -38,13 +47,20 @@ void ConsoleManager::OnCurrencyEntered(const Event* e)
 void ConsoleManager::OnItemChosen(const Event* e)
 {
   unsigned index = ((const ChooseItemEvent*)e)->index;
-  if(index < itemPrices.size())
+  if(index < items.size())
   {
-    float itemPrice = itemPrices[index];
+    if(items[index].quantity == 0)
+    {
+      SoldOutEvent soldOut(index);
+      SendEvent(soldOut);
+      return;
+    }
+    float itemPrice = items[index].price;
     /*To deal w/ floating point sillyness*/
     if(itemPrice == currentAmountInserted)
     {
       currentAmountInserted = 0;
+      --items[index].quantity;
       DispenseItem item(index);
       SendEvent(item);
     }
@@ -52,10 +68,15 @@ void ConsoleManager::OnItemChosen(const Event* e)
     {
       currentAmountInserted -= itemPrice;
       DispenseItem item(index);
-      DispenseChange change(currentAmountInserted);
+      float changeDue = currentAmountInserted;
       currentAmountInserted = 0;
+      --items[index].quantity;
       SendEvent(item);
-      SendEvent(change);
+      if(!exactChangeOnly)
+      {
+        DispenseChange change(changeDue);
+        SendEvent(change);
+      }
     }
     else
     {
@@ -73,4 +94,9 @@ void ConsoleManager::OnCoinReturn(const Event*)
     currentAmountInserted = 0;
     SendEvent(change);
   }
+}
+
+void ConsoleManager::OnExactChange(const Event* e)
+{
+  exactChangeOnly = ((const ExactChangeEvent*)e)->exactChangeOnly;
 }

@@ -19,20 +19,20 @@
     <Filter Include="Headers\EventSystem">
       <UniqueIdentifier>{5d60b233-a4a6-49b9-8c63-fbcb08b78990}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\EventSystem">
-      <UniqueIdentifier>{7455020e-eca5-43b2-8367-1826b3940142}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headers\CurrencyManager">
       <UniqueIdentifier>{9995670c-f24d-4e2d-a9b8-e2cc5ffb640c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\CurrencyManager">
-      <UniqueIdentifier>{bd8cc50d-b8dd-4c73-b54d-e1df3242f435}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headers\ConsoleManager">
       <UniqueIdentifier>{85b827bc-0c9c-44f0-a018-da1c51324ac8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\ConsoleManager">
-      <UniqueIdentifier>{b4ae64ce-61dd-43cf-8ee9-5c063e59cd4f}</UniqueIdentifier>
+    <Filter Include="Headers\CoinDispenser">
+      <UniqueIdentifier>{5e17f8d2-d86a-432f-8195-9d64fe58a2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\DisplayManager">
+      <UniqueIdentifier>{b4bd7268-53d2-48f5-a715-9c5c9e2943c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CurrencyManager">
+      <UniqueIdentifier>{10bfecfa-44fa-499e-af6f-0bfce21b1a72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,20 +51,23 @@
     <ClCompile Include="..\third_party_software\jsoncpp\json_writer.cpp">
       <Filter>_Third_Party_Libraries\JsonCpp</Filter>
     </ClCompile>
+    <ClCompile Include="..\include\DisplayManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\source\EventSystem.cpp">
-      <Filter>Source\EventSystem</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\ConsoleManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\CoinDispenser.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Currency.cpp">
       <Filter>Source\CurrencyManager</Filter>
     </ClCompile>
     <ClCompile Include="..\source\CurrencyManager.cpp">
       <Filter>Source\CurrencyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\ConsoleManager.cpp">
-      <Filter>Source\ConsoleManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\CoinDispenser.cpp">
-      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,9 +200,6 @@
     <ClInclude Include="..\include\CurrencyManager.hpp">
       <Filter>Headers\CurrencyManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\DispenserEvents.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\ConsoleEvents.hpp">
       <Filter>Headers\ConsoleManager</Filter>
     </ClInclude>
@@ -210,10 +210,22 @@
       <Filter>Headers\ConsoleManager</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CoinDispenser.hpp">
-      <Filter>Headers</Filter>
+      <Filter>Headers\CoinDispenser</Filter>
     </ClInclude>
     <ClInclude Include="..\include\CoinDispenserTests.hpp">
-      <Filter>Headers</Filter>
+      <Filter>Headers\CoinDispenser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DisplayDefines.hpp">
+      <Filter>Headers\DisplayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DisplayManagerTests.hpp">
+      <Filter>Headers\DisplayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DisplayManager.hpp">
+      <Filter>Headers\DisplayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DispenserEvents.hpp">
+      <Filter>Headers\CoinDispenser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,5 +245,8 @@
       <Filter>_Third_Party_Libraries\JsonCpp</Filter>
     </None>
     <None Include="..\bin\testCurrencies.json" />
+    <None Include="..\bin\lowCoinCurrencies.json" />
+    <None Include="..\bin\lowQuantityTestItems.json" />
+    <None Include="..\bin\testItems.json" />
   </ItemGroup>
 </Project>

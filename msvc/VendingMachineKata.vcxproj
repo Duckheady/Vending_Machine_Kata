@@ -105,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="..\include\CoinDispenser.cpp" />
     <ClCompile Include="..\include\ConsoleManager.cpp" />
+    <ClCompile Include="..\include\DisplayManager.cpp" />
     <ClCompile Include="..\source\Currency.cpp" />
     <ClCompile Include="..\source\CurrencyManager.cpp" />
     <ClCompile Include="..\source\EventSystem.cpp" />
@@ -125,6 +126,9 @@
     <ClInclude Include="..\include\CurrencyEvents.hpp" />
     <ClInclude Include="..\include\CurrencyTests.hpp" />
     <ClInclude Include="..\include\DispenserEvents.hpp" />
+    <ClInclude Include="..\include\DisplayDefines.hpp" />
+    <ClInclude Include="..\include\DisplayManager.hpp" />
+    <ClInclude Include="..\include\DisplayManagerTests.hpp" />
     <ClInclude Include="..\include\Event.hpp" />
     <ClInclude Include="..\include\EventSystem.hpp" />
     <ClInclude Include="..\include\EventSystemTests.hpp" />
@@ -166,7 +170,10 @@
     <ClInclude Include="..\third_party_software\jsoncpp\json_batchallocator.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\bin\lowCoinCurrencies.json" />
+    <None Include="..\bin\lowQuantityTestItems.json" />
     <None Include="..\bin\testCurrencies.json" />
+    <None Include="..\bin\testItems.json" />
     <None Include="..\third_party_software\googletest\LICENSE" />
     <None Include="..\third_party_software\jsoncpp\json_internalarray.inl" />
     <None Include="..\third_party_software\jsoncpp\json_internalmap.inl" />

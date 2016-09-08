@@ -212,3 +212,138 @@ TEST(ConsoleManagerTests, CoinReturnTests)
    SendEvent(changeReturn);
    EventSystem::Teardown();
 }
+
+TEST(ConsoleManagerTests, SoldOutTests)
+{
+  std::ifstream stream("lowQuantityTestItems.json");
+  std::vector<float> items;
+  ConsoleManager mgr(stream);
+  /*Quanities: Coke : 2, Chips: 1, Candy: 0*/
+  bool itemDispensed;
+  unsigned itemIndex;
+  unsigned soldOutIndex;
+  RegisterNormalCallback
+    (DispenseItem, 
+     /*Captures DispenseItem event.*/
+     [&] (const Event* gEvent) 
+      { 
+        const DispenseItem* iEvent = (const DispenseItem*) gEvent;
+        itemDispensed = true;
+        itemIndex = iEvent->itemIndex;
+      }
+    );
+  RegisterNormalCallback
+    (SoldOutEvent, 
+    /*Captures DispenseChange event*/
+    [&] (const Event* gEvent) 
+      { 
+        const SoldOutEvent* iEvent = (const SoldOutEvent*) gEvent;
+        itemDispensed = false;
+        soldOutIndex = iEvent->indexSoldOut;
+      }
+    );
+  CurrencyTaken addCurrency(1.00, TYPE_ID(CoinTemplate));
+  ChooseItemEvent itemChoice(2);
+  /*Basic check*/
+  SendEvent(addCurrency)
+  SendEvent(itemChoice);
+  EXPECT_FALSE(itemDispensed);
+  EXPECT_EQ(soldOutIndex, 2);
+  /*Buy chips, then try to buy again*/
+  itemChoice.index = 1;
+  SendEvent(addCurrency);
+  SendEvent(itemChoice);
+  EXPECT_TRUE(itemDispensed);
+  EXPECT_EQ(itemIndex, 1);
+  SendEvent(addCurrency);
+  SendEvent(itemChoice);
+  EXPECT_FALSE(itemDispensed);
+  EXPECT_EQ(soldOutIndex, 1);  
+  /**Try to buy candy, then add money and buy soda.*/
+  CurrencyTaken addCurrency2(.65f, TYPE_ID(CoinTemplate));
+  CurrencyTaken addCurrency3(.35f, TYPE_ID(CoinTemplate));
+  SendEvent(addCurrency2);
+  itemChoice.index = 2;
+  SendEvent(itemChoice);
+  EXPECT_FALSE(itemDispensed);
+  EXPECT_EQ(soldOutIndex, 2);
+  SendEvent(addCurrency3);
+  itemChoice.index = 0;
+  SendEvent(itemChoice);
+  EXPECT_TRUE(itemDispensed);
+  EXPECT_EQ(itemIndex, 0);
+  /**/
+  EventSystem::Teardown();
+}
+
+TEST(ConsoleManagerTests, ExactChangeTests)
+{
+  std::ifstream stream("testItems.json");
+  std::vector<float> items;
+  ConsoleManager mgr(stream);
+  /*Quanities: Coke : 2, Chips: 1, Candy: 0*/
+  bool itemDispensed = false;
+  unsigned itemIndex = -1;
+  float changeDue = -1.0f;
+  RegisterNormalCallback
+    (DispenseItem, 
+     /*Captures DispenseItem event.*/
+     [&] (const Event* gEvent) 
+      { 
+        const DispenseItem* iEvent = (const DispenseItem*) gEvent;
+        itemIndex = iEvent->itemIndex;
+      }
+    );
+  RegisterNormalCallback
+    (DispenseChange, 
+    /*Captures DispenseChange event*/
+    [&] (const Event* gEvent) 
+      { 
+        const DispenseChange* iEvent = (const DispenseChange*) gEvent;
+        changeDue = iEvent->changeAmount;
+      }
+    );
+  CurrencyTaken addCurrency(1.00, TYPE_ID(CoinTemplate));
+  CurrencyTaken addCurrency2(.50, TYPE_ID(CoinTemplate));
+  ChooseItemEvent itemChoice(1); /*.50*/
+  ChooseChangeReturn changeReturn;
+  ExactChangeEvent exactChangeEvent(true);
+  /*Basic check - extra money*/
+  SendEvent(exactChangeEvent);
+  SendEvent(addCurrency)
+  SendEvent(itemChoice);
+  EXPECT_FLOAT_EQ(changeDue, -1.0f);
+  EXPECT_EQ(itemIndex, 1);
+  EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
+  itemIndex = -1;
+  changeDue = -1.0f;
+  /*Basic check - exact change*/
+  SendEvent(addCurrency2);
+  SendEvent(itemChoice);
+  EXPECT_FLOAT_EQ(changeDue, -1.0f);
+  EXPECT_EQ(itemIndex, 1);
+  EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
+  itemIndex = -1;
+  changeDue = -1.0f;
+  /*Add money -> exact flag change -> dispense change*/
+  SendEvent(addCurrency);
+  exactChangeEvent.exactChangeOnly = false;
+  SendEvent(exactChangeEvent);
+  SendEvent(itemChoice);
+  EXPECT_FLOAT_EQ(changeDue, .50f);
+  EXPECT_EQ(itemIndex, 1);
+  EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
+  itemIndex = -1;
+  changeDue = -1.0f;
+  /*Check to see if returning coins still returns money.*/
+  SendEvent(addCurrency);
+  exactChangeEvent.exactChangeOnly = true;
+  SendEvent(exactChangeEvent);
+  SendEvent(changeReturn);
+  EXPECT_FLOAT_EQ(changeDue, 1.00f);
+  EXPECT_EQ(itemIndex, -1);
+  EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
+  /***/
+  EventSystem::Teardown();
+}
+
