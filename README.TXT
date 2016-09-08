@@ -49,6 +49,8 @@ Notes:
    -Macros are all caps except when I want it to appear to be a global function i.e. SendEvent().
  -Check out VendingMachineIntegrationTests.hpp for a good place to start code evaluation as it has some 
   comments in there relating to expectations.
+ -Many tests purposefully violate the DRY principle because I value my errors to tell me where the
+  problem is. I hope Pillar has the same value.
 
 Post-Mordem Thoughts:
   This was a pretty amusing test. I haven't used Google Test in a couple years, so it was intersting using
