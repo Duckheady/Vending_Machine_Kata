@@ -1,3 +1,13 @@
+/*********************************************************************************
+*  Author: Nicholas Louks
+*  File Brief: Tests integration between the ConsoleManager, CurrencyManager
+*    DisplayManger, and CoinDispenser. See below comment for more on expected input and output
+*    events in addition to each modules file or the readme for information on thier responsiblities.
+*  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
+*    This kata was developed for the purpose of displaying my ability to Pillar Technologies
+*    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
+***********************************************************************************/
+
 #pragma once
 
 #include "gtest/gtest.h"
@@ -154,6 +164,14 @@ protected:
   }
 };
 
+/*What is happening with SendEvent(*sendDime):
+  CurrencyInserted event is sent to the EventManager.
+  Those signed up for the events (i.e. CurrencyManager) pick out the data.
+  In this case, CurrencyManager validates the coin, and sends another event CurrencyTaken (CurrencyEvents.hpp).
+  Those signed up for this event (i.e. ConsoleManager, DisplayManager, and CoinDispenser) then react and return.
+  Program flow then continues at the line following SendEvent(*sendDime).
+*/
+/*Other events follow the same idea, all of them unaware of the other listeners*/
 TEST_F(VendingMachineIntegrationTests, SimplePurchase)
 {
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
