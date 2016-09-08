@@ -132,7 +132,6 @@
     <ClInclude Include="..\include\Event.hpp" />
     <ClInclude Include="..\include\EventSystem.hpp" />
     <ClInclude Include="..\include\EventSystemTests.hpp" />
-    <ClInclude Include="..\include\main.hpp" />
     <ClInclude Include="..\include\TypeId.hpp" />
     <ClInclude Include="..\include\VendingMachineIntegrationTests.hpp" />
     <ClInclude Include="..\third_party_software\googletest\gtest-internal-inl.h" />

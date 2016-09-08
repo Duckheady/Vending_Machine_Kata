@@ -1,3 +1,11 @@
+/*********************************************************************************
+*  Author: Nicholas Louks
+*  Kata: Vending Machine (C++)
+*  File Purpose: Handles cross-module communication in the system. Just a simple event system.
+*  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
+*    This kata was developed for the purpose of displaying my ability to Pillar Technologies
+*    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
+***********************************************************************************/
 #include "EventSystem.hpp"
 
 DefineSingleton(EventSystem);

@@ -1,3 +1,12 @@
+/*********************************************************************************
+*  Author: Nicholas Louks
+*  Kata: Vending Machine (C++)
+*  File Purpose: Defines events relating to currency. CurrencyInserted is an abstraction where
+*    CurrencyTaken is currency that has a value assosiated with it.
+*  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
+*    This kata was developed for the purpose of displaying my ability to Pillar Technologies
+*    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
+***********************************************************************************/
 #pragma once
 
 #include "Event.hpp"

@@ -1,3 +1,13 @@
+/*********************************************************************************
+*  Author: Nicholas Louks
+*  Kata: Vending Machine (C++)
+*  File Purpose: Handles events and logic that are assumed to be coming from the selection pad/
+*    console. This makes sure purchases of items are legitimate before passing off a dispense
+*    requests to the hardware and CurrencyManager.
+*  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
+*    This kata was developed for the purpose of displaying my ability to Pillar Technologies
+*    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
+***********************************************************************************/
 #include "ConsoleManager.hpp"
 #include "ConsoleEvents.hpp"
 #include "DispenserEvents.hpp"

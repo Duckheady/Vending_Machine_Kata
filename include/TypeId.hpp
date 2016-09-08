@@ -1,3 +1,12 @@
+/*********************************************************************************
+*  Author: Nicholas Louks
+*  Kata: Vending Machine (C++)
+*  File Purpose: Some quick nice defines and implementations for generic useful utilities like
+     TYPE_ID which returns a unique unsigned value for every type.
+*  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
+*    This kata was developed for the purpose of displaying my ability to Pillar Technologies
+*    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
+***********************************************************************************/
 #pragma once
 /*Quick singleton defines as well, why not...*/
 #define DeclareSingleton(type)															   \

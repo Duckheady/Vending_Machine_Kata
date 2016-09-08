@@ -1,3 +1,11 @@
+/*********************************************************************************
+*  Author: Nicholas Louks
+*  Kata: Vending Machine (C++)
+*  File Purpose: Defines various currency types that are used by the CurrencyManager.
+*  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
+*    This kata was developed for the purpose of displaying my ability to Pillar Technologies
+*    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
+***********************************************************************************/
 #pragma once
 #include "TypeId.hpp"
 #include <json/value.h>
