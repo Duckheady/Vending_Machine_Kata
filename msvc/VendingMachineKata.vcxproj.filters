@@ -225,7 +225,10 @@
       <Filter>Headers\DisplayManager</Filter>
     </ClInclude>
     <ClInclude Include="..\include\DispenserEvents.hpp">
-      <Filter>Headers\CoinDispenser</Filter>
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\VendingMachineIntegrationTests.hpp">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
