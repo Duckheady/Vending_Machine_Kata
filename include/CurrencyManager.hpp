@@ -11,7 +11,7 @@ class CurrencyManager
   void OnCurrencyEntered(const Event* e);
   void RegisterEvents();
 public:
-  CurrencyManager(std::ifstream& currencyDefinitions);
+  CurrencyManager(const Json::Value& currencyDefinitions);
   ~CurrencyManager();
   
 };

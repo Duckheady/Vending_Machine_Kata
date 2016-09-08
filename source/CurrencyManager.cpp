@@ -3,31 +3,23 @@
 #include "CurrencyEvents.hpp"
 #include "EventSystem.hpp"
 #include <json\reader.h>
-/*TODO: Put valid throw message*/
-CurrencyManager::CurrencyManager(std::ifstream& currencyDefinitions)
+#include <assert.h>
+
+CurrencyManager::CurrencyManager(const Json::Value& root)
 {
-  Json::Reader reader;
-  Json::Value root;
-  bool isGood = reader.parse(currencyDefinitions, root);
-  if(isGood)
+  assert(root.isArray());
+  for(unsigned i = 0; i < root.size(); ++i)
   {
-    if(!root.isArray())
-      throw;
-    for(unsigned i = 0; i < root.size(); ++i)
+    assert(root[i].isObject());
+    assert(root[i].isMember("type"));
+    /*Could define meta meta files but it seems like overkill for now*/
+    if(root[i]["type"].asString() == "Coin")
     {
-      if(!root[i].isObject() && root[i].isMember("type"))
-        throw; /*Warnings would probally be better, but this is fine for now*/
-      /*Could define meta meta files but it seems like overkill for now*/
-      if(root[i]["type"].asString() == "Coin")
-      {
-        CurrencyTemplate* newCurrency = new CoinTemplate(root[i]);
-        currencyTemplates.push_back(newCurrency);
-      }
+      CurrencyTemplate* newCurrency = new CoinTemplate(root[i]);
+      currencyTemplates.push_back(newCurrency);
     }
-    RegisterEvents();
   }
-  else
-    throw;
+  RegisterEvents();
 }
 
 CurrencyManager::~CurrencyManager()

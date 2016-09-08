@@ -6,15 +6,16 @@
 #include "EventSystem.hpp"
 #include "Currency.hpp"
 #include <algorithm>
+#include <assert.h>
 
 /*Dealing with annoying mantissas!*/
 #define EPSILION .0001
 
 CoinDispenser::Dispenser::Dispenser(const Json::Value& jsonValue)
 {
-  //assert(jsonValue.isMember("value"))
-  //assert(jsonValue.isMember("numberOfCoins"))
-  //assert(jsonValue.isMember("dispenserId"))
+  assert(jsonValue.isMember("value"));
+  assert(jsonValue.isMember("numberOfCoins"));
+  assert(jsonValue.isMember("dispenserId"));
   coinValue = jsonValue["value"].asFloat();
   numberOfCoins = jsonValue["numberOfCoins"].asUInt();
   dispenserId = jsonValue["dispenserId"].asUInt();
@@ -27,12 +28,12 @@ bool CoinDispenser::DispenserSorter(const CoinDispenser::Dispenser& lhs, const C
 
 CoinDispenser::CoinDispenser(const Json::Value& currencies, const Json::Value& items) : totalChangeValue(0), maxItemValue(0)
 {
-  if(!currencies.isArray() || !items.isArray())
-    throw;
+  assert(currencies.isArray());
+  assert(items.isArray());
   /*Initializing coin dispensers first and tallying money*/
   for(unsigned i = 0; i < currencies.size(); ++i)
   {
-    //assert(currencies[i].hasMember("type"));
+    assert(currencies[i].isMember("type"));
     if(currencies[i]["type"].asString() == "Coin")
     {
       dispensers.push_back(currencies[i]);
@@ -44,7 +45,7 @@ CoinDispenser::CoinDispenser(const Json::Value& currencies, const Json::Value& i
   /*Finding highest cost and setting it.*/
   for(unsigned i = 0; i < items.size(); ++i)
   {
-    //assert(items[i].hasMember("cost"));
+    assert(items[i].isMember("cost"));
     if(items[i]["cost"] > maxItemValue)
       maxItemValue = items[i]["cost"].asFloat();
   }
@@ -95,7 +96,7 @@ void CoinDispenser::OnDispenseChange(const Event* e)
     }
   }
   VerifyExactChangeState();
-  //assert(changeAmount == 0.0f);
+  assert(changeAmount <= EPSILION);
 }
 
 void CoinDispenser::VerifyExactChangeState()

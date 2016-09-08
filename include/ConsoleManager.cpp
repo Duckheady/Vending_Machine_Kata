@@ -4,30 +4,22 @@
 #include <json\reader.h>
 #include "EventSystem.hpp"
 #include "CurrencyEvents.hpp"
+#include <assert.h>
 
 ConsoleManager::Item::Item(const Json::Value& value)
 {
-  //assert(value["cost"].isMember("cost"));
-  //assert(value["quantity"].isMember("quantity"));
+  assert(value.isMember("cost"));
+  assert(value.isMember("quantity"));
   price = value["cost"].asFloat();
   quantity = value["quantity"].asUInt();
 }
-ConsoleManager::ConsoleManager(std::istream& stream)
+ConsoleManager::ConsoleManager(const Json::Value& root)
 {
   currentAmountInserted = 0;
   exactChangeOnly = false;
-  Json::Reader reader;
-  Json::Value root;
-  bool isGood = reader.parse(stream, root);
-  if(isGood)
-  {
-    if(!root.isArray())
-      throw;
-    for(unsigned i = 0; i < root.size(); ++i)
-    {
-      items.push_back(Item(root[i]));
-    }
-  }
+  assert(root.isArray());
+  for(unsigned i = 0; i < root.size(); ++i)
+    items.push_back(Item(root[i]));
   RegisterEvents();
 }
 

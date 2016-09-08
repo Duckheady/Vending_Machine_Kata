@@ -1,7 +1,14 @@
 #include "Currency.hpp"
+#include <assert.h>
 
 CoinTemplate::CoinTemplate(const Json::Value& dataTemplate)
 {
+  assert(dataTemplate.isMember("weight"));
+  assert(dataTemplate.isMember("weightErrorPercentage"));
+  assert(dataTemplate.isMember("radius"));
+  assert(dataTemplate.isMember("radiusErrorPercentage"));
+  assert(dataTemplate.isMember("value"));
+  /**/
   weight = dataTemplate["weight"].asFloat();
   weightErr = dataTemplate["weightErrorPercentage"].asFloat();
   radius = dataTemplate["radius"].asFloat();
@@ -13,6 +20,11 @@ CoinTemplate::CoinTemplate(const Json::Value& dataTemplate)
   iterate through them.*/
 bool CoinTemplate::TestValidity(const Json::Value& mysteryCurrency) const
 {
+  /*If it doesn't have these memebers, return false*/
+  if(!mysteryCurrency.isMember("weight"))
+    return false;
+  if(!mysteryCurrency.isMember("radius"))
+    return false;
   float testValue = mysteryCurrency["weight"].asFloat();
   if( (testValue < weight - weight*weightErr) || (testValue > weight + weight*weightErr) )
     return false;

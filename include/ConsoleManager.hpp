@@ -23,7 +23,7 @@ class ConsoleManager
   void OnExactChange(const Event* e);
   void RegisterEvents();
 public:
-  ConsoleManager(std::istream& stream);
+  ConsoleManager(const Json::Value& jsonValue);
   
   float GetCurrentAmountInserted() { return currentAmountInserted; }
 };

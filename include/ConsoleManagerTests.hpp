@@ -47,9 +47,11 @@ TEST(ConsoleManagerTests, TemplateConsoleTests)
 
 TEST(ConsoleManagerTests, VerifiedCoinTests)
 {
+  Json::Value root;
   std::ifstream stream("testItems.json");
   std::vector<float> items;
-  ConsoleManager mgr(stream);
+  ConsoleManagerTests::TestLoad(stream, root, items);
+  ConsoleManager mgr(root);
   CurrencyTaken addCurrency(.05f, TYPE_ID(CoinTemplate));
   CurrencyRejected rejectCur;
   SendEvent(addCurrency);
@@ -64,9 +66,11 @@ TEST(ConsoleManagerTests, VerifiedCoinTests)
 
 TEST(ConsoleManagerTests, SelectItemTests)
 {
+  Json::Value root;
   std::ifstream stream("testItems.json");
   std::vector<float> items;
-  ConsoleManager mgr(stream);
+  ConsoleManagerTests::TestLoad(stream, root, items);
+  ConsoleManager mgr(root);
   unsigned itemIndex = -1;
   float changeDue = 0.0f;
   bool notEnoughMoney = false;
@@ -164,9 +168,11 @@ TEST(ConsoleManagerTests, SelectItemTests)
 
 TEST(ConsoleManagerTests, CoinReturnTests)
 {
+  Json::Value root;
   std::ifstream stream("testItems.json");
   std::vector<float> items;
-  ConsoleManager mgr(stream);
+  ConsoleManagerTests::TestLoad(stream, root, items);
+  ConsoleManager mgr(root);
   float changeDue;
   RegisterNormalCallback
     (DispenseItem, 
@@ -215,9 +221,11 @@ TEST(ConsoleManagerTests, CoinReturnTests)
 
 TEST(ConsoleManagerTests, SoldOutTests)
 {
+  Json::Value root;
   std::ifstream stream("lowQuantityTestItems.json");
   std::vector<float> items;
-  ConsoleManager mgr(stream);
+  ConsoleManagerTests::TestLoad(stream, root, items);
+  ConsoleManager mgr(root);
   /*Quanities: Coke : 2, Chips: 1, Candy: 0*/
   bool itemDispensed;
   unsigned itemIndex;
@@ -278,9 +286,11 @@ TEST(ConsoleManagerTests, SoldOutTests)
 
 TEST(ConsoleManagerTests, ExactChangeTests)
 {
+  Json::Value root;
   std::ifstream stream("testItems.json");
   std::vector<float> items;
-  ConsoleManager mgr(stream);
+  ConsoleManagerTests::TestLoad(stream, root, items);
+  ConsoleManager mgr(root);
   /*Quanities: Coke : 2, Chips: 1, Candy: 0*/
   bool itemDispensed = false;
   unsigned itemIndex = -1;

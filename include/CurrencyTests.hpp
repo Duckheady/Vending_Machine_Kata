@@ -106,7 +106,7 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   CurrencyTests::TestLoad(stream, root, coins);
   stream.clear();
   stream.seekg(0, std::ios::beg);
-  CurrencyManager currencyManager(stream);
+  CurrencyManager currencyManager(root);
   bool tookCurrency = false;
   float valueOfCurrency = 0;
   RegisterNormalCallback
