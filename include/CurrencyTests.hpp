@@ -1,7 +1,7 @@
 /*********************************************************************************
 *  Author: Nicholas Louks
 *  Kata: Vending Machine (C++)
-*  File Purpose: Tests for the CurrencyMnager.
+*  File Purpose: Tests for the CurrencyManager.
 *  Note: This code base is for  the Vending Machine code kata posed by Pillar Technologies.
 *    This kata was developed for the purpose of displaying my ability to Pillar Technologies
 *    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
@@ -56,7 +56,7 @@ namespace CurrencyTests
   }
 }
 
-TEST(CurrencyTests, TemplateCoinLoadingTest)
+TEST(CurrencyLoadTest, TemplateCoinLoadingTest)
 {
   Json::Value root;
   std::ifstream stream("testCurrencies.json");
@@ -65,80 +65,117 @@ TEST(CurrencyTests, TemplateCoinLoadingTest)
   EXPECT_EQ(coins.size(), 3u);
 }
 
-TEST(CurrencyTests, CoinEquvilancyTests)
+class CurrencyTestFixture : public testing::Test
 {
+protected:
   Json::Value root;
-  std::ifstream stream("testCurrencies.json");
-  std::vector<CoinTemplate> coins;
-  CurrencyTests::TestLoad(stream, root, coins);
+  std::vector<CoinTemplate> coins;  
+  virtual void SetUp()
+  {
+    std::ifstream stream("testCurrencies.json");
+    CurrencyTests::TestLoad(stream, root, coins);
+  }
+public:
+  virtual ~CurrencyTestFixture() {}
+};
+
+TEST_F(CurrencyTestFixture, CoinEquivilancyTestsNoVariance)
+{
   Json::Value testCoin;
   /*Test both a bit over*/
   testCoin["radius"] = root[0]["radius"].asFloat();
   testCoin["weight"] = root[0]["weight"].asFloat();
-  float noise = .0001f;
   EXPECT_TRUE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "radius", &coins[0], 0));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[1], "radius", &coins[0], 0));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[2], "radius", &coins[0], 0));
   EXPECT_TRUE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "weight", &coins[0], 0));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[1], "weight", &coins[0], 0));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[2], "weight", &coins[0], 0));
-  /**/
+}
+
+TEST_F(CurrencyTestFixture, CoinEquivilancyTestsGoodNoiseTest)
+{
+  Json::Value testCoin;
+  /*Test both a bit over*/
+  testCoin["radius"] = root[0]["radius"].asFloat();
+  testCoin["weight"] = root[0]["weight"].asFloat();
+  float noise = .0001f;
   EXPECT_TRUE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "radius", &coins[0], noise));
   EXPECT_TRUE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "radius", &coins[0], -noise));
   EXPECT_TRUE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "weight", &coins[0], noise));
   EXPECT_TRUE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "weight", &coins[0], -noise));
-  noise = .1f;
+}
+
+TEST_F(CurrencyTestFixture, CoinEquivilancyTestsBadNoiseTest)
+{
+  Json::Value testCoin;
+  /*Test both a bit over*/
+  testCoin["radius"] = root[0]["radius"].asFloat();
+  testCoin["weight"] = root[0]["weight"].asFloat();
+  float noise = .1f;
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "radius", &coins[0], noise));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "radius", &coins[0], -noise));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "weight", &coins[0], noise));
   EXPECT_FALSE(CurrencyTests::TestAbstractCurrency(testCoin, root[0], "weight", &coins[0], -noise));
 }
 
-TEST(CurrencyTests, CoinValueTests)
+TEST_F(CurrencyTestFixture, CoinValueTests)
 {
-  Json::Value root;
-  std::ifstream stream("testCurrencies.json");
-  std::vector<CoinTemplate> coins;
-  CurrencyTests::TestLoad(stream, root, coins);
   for(unsigned i = 0; i < coins.size(); ++i)
   {
     EXPECT_EQ(coins[i].GetCurrencyValue(), root[i]["value"].asFloat());
   }
 }
 
-TEST(CurrencyManagerTests, ValidEventsSent)
+class CurrencyManagerTests : public CurrencyTestFixture
 {
-  Json::Value root;
-  std::ifstream stream("testCurrencies.json");
-  std::vector<CoinTemplate> coins;
-  CurrencyTests::TestLoad(stream, root, coins);
-  stream.clear();
-  stream.seekg(0, std::ios::beg);
-  CurrencyManager currencyManager(root);
-  bool tookCurrency = false;
-  float valueOfCurrency = 0;
-  RegisterNormalCallback
-    (CurrencyTaken, 
-    /*Captures CurrencyTaken event*/
-    [&] (const Event* gEvent) 
-      { 
-        const CurrencyTaken* cEvent = (const CurrencyTaken*) gEvent;
-        tookCurrency = true;
-        valueOfCurrency = cEvent->valueOfCurrency;
-      }
-    );
-  RegisterNormalCallback
-    (CurrencyRejected, 
-    /*Captures CurrencyRejected event*/
-    [&tookCurrency] (const Event*) { tookCurrency = false; }
-    );
+  void TestCurrency(unsigned testIndex, float noise, bool isBadNoise);
+protected:
+  CurrencyManager* currencyManager;
+  bool tookCurrency;
+  float valueOfCurrency;
+
+  void CurrencyTakenCapture(const Event* gEvent)
+  {
+    const CurrencyTaken* cEvent = (const CurrencyTaken*) gEvent;
+    tookCurrency = true;
+    valueOfCurrency = cEvent->valueOfCurrency;
+  }
+  void CurrencyRejectedCapture(const Event*)
+  {
+    tookCurrency = false;
+  }
+  virtual void SetUp()
+  {
+    CurrencyTestFixture::SetUp();
+    currencyManager = new CurrencyManager(root);
+    tookCurrency = false;
+    valueOfCurrency = 0;
+    RegisterClassCallback(CurrencyTaken, *this, CurrencyManagerTests, CurrencyTakenCapture);
+    RegisterClassCallback(CurrencyRejected, *this, CurrencyManagerTests, CurrencyRejectedCapture);
+  }
+
+  virtual void TearDown()
+  {
+    delete currencyManager;
+    currencyManager = nullptr;
+    EventSystem::Teardown();
+    CurrencyTestFixture::TearDown();
+  }
+  
+public:
+  virtual ~CurrencyManagerTests() {}
+};
+
+TEST_F(CurrencyManagerTests, TestValidValuingOfCurrency0)
+{
   Json::Value testCoin;
   /*Test both a bit over*/
   testCoin["radius"] = root[0]["radius"].asFloat();
   testCoin["weight"] = root[0]["weight"].asFloat();
   float testCoinValue = root[0]["value"].asFloat();
   float noise = .0001f;
-  /*Should always invoke a taken/rejected event*/
+  /*Should always invoke a taken event*/
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[0], "radius", 0);
   EXPECT_TRUE(tookCurrency);
   EXPECT_TRUE(valueOfCurrency == testCoinValue);
@@ -157,8 +194,15 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[0], "weight", -noise);
   EXPECT_TRUE(tookCurrency);
   EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  /***/
-  noise = .1f;
+}
+
+TEST_F(CurrencyManagerTests, TestInvalidCurrency0)
+{
+  Json::Value testCoin;
+  /*Test both a bit over*/
+  testCoin["radius"] = root[0]["radius"].asFloat();
+  testCoin["weight"] = root[0]["weight"].asFloat();
+  float noise = .1f;
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[0], "radius", noise);
   EXPECT_FALSE(tookCurrency);
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[0], "radius", -noise);
@@ -167,44 +211,16 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   EXPECT_FALSE(tookCurrency);
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[0], "weight", -noise);
   EXPECT_FALSE(tookCurrency);
-  /***Testing index 1 now***/
-  testCoin["radius"] = root[1]["radius"].asFloat();
-  testCoin["weight"] = root[1]["weight"].asFloat();
-  testCoinValue = root[1]["value"].asFloat();
-  noise = .0001f;
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "radius", 0);
-  EXPECT_TRUE(tookCurrency);
-  EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "radius", noise);
-  EXPECT_TRUE(tookCurrency);
-  EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "radius", -noise);
-  EXPECT_TRUE(tookCurrency);
-  EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "weight", 0);
-  EXPECT_TRUE(tookCurrency);
-  EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "weight", noise);
-  EXPECT_TRUE(tookCurrency);
-  EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "weight", -noise);
-  EXPECT_TRUE(tookCurrency);
-  EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  /***/
-  noise = .1f;
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "radius", noise);
-  EXPECT_FALSE(tookCurrency);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "radius", -noise);
-  EXPECT_FALSE(tookCurrency);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "weight", noise);
-  EXPECT_FALSE(tookCurrency);
-  CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[1], "weight", -noise);
-  EXPECT_FALSE(tookCurrency);
-  /***Testing index 2 now***/
+}
+
+TEST_F(CurrencyManagerTests, TestValidValuingOfCurrency2)
+{
+  Json::Value testCoin;
+  /*Test both a bit over*/
   testCoin["radius"] = root[2]["radius"].asFloat();
   testCoin["weight"] = root[2]["weight"].asFloat();
-  testCoinValue = root[2]["value"].asFloat();
-  noise = .0001f;
+  float testCoinValue = root[2]["value"].asFloat();
+  float noise = .0001f;
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[2], "radius", 0);
   EXPECT_TRUE(tookCurrency);
   EXPECT_TRUE(valueOfCurrency == testCoinValue);
@@ -223,8 +239,15 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[2], "weight", -noise);
   EXPECT_TRUE(tookCurrency);
   EXPECT_TRUE(valueOfCurrency == testCoinValue);
-  /***/
-  noise = .1f;
+}
+
+TEST_F(CurrencyManagerTests, TestInvalidCurrency2)
+{
+  Json::Value testCoin;
+  /*Test both a bit over*/
+  testCoin["radius"] = root[2]["radius"].asFloat();
+  testCoin["weight"] = root[2]["weight"].asFloat();
+  float noise = .1f;
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[2], "radius", noise);
   EXPECT_FALSE(tookCurrency);
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[2], "radius", -noise);
@@ -233,6 +256,4 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   EXPECT_FALSE(tookCurrency);
   CurrencyTests::SendCurrencyInsertedEvent(testCoin, root[2], "weight", -noise);
   EXPECT_FALSE(tookCurrency);
-  EventSystem::Teardown();
 }
-

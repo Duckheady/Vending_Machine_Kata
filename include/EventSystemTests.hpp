@@ -63,7 +63,55 @@ namespace EventSystemTests
   void SimpleCallback(const Event* e) { EXPECT_NE(dynamic_cast<const FooEvent*>(e), nullptr); ++callbackGlobal; }
 }
 
-TEST(EventSystemTests, TestNormalCallbacks)
+class EventSystemTestFixture: public testing::Test
+{
+protected:
+  void SetUp()
+  {
+    EventSystemTests::callbackGlobal = 0;
+  }
+  void TearDown()
+  {
+    EventSystem::Teardown();
+  }
+};
+
+TEST_F(EventSystemTestFixture, TestSimpleCallback1)
+{
+  /*Registrations*/
+  RegisterNormalCallback(EventSystemTests::FooEvent, EventSystemTests::SimpleCallback);
+  std::string testAnswer;
+  RegisterNormalCallback
+    (EventSystemTests::FooEvent, 
+    /*Sets event data to testAnswer*/
+    [&testAnswer] (const Event* gEvent) { const EventSystemTests::FooEvent* fEvent = (const EventSystemTests::FooEvent*) gEvent; testAnswer = fEvent->data; }
+    );
+  EventSystemTests::FooEvent testEvent("I am a test string");
+  EXPECT_EQ(testAnswer, "");
+  SendEvent(testEvent);  /*callbackGlobal == 1*/
+  EXPECT_EQ(testAnswer, "I am a test string");
+}
+
+TEST_F(EventSystemTestFixture, TestSimpleCallback2)
+{
+  /*Registrations*/
+  std::string testAnswer;
+  RegisterNormalCallback
+    (EventSystemTests::AppendEvent, 
+    /*Appends event data to testAnswer*/
+    [&testAnswer] (const Event* gEvent) { const EventSystemTests::AppendEvent* fEvent = (const EventSystemTests::AppendEvent*) gEvent; testAnswer += fEvent->appData; }
+    );
+  EventSystemTests::AppendEvent testEvent2("I am a test string too");
+  EXPECT_EQ(testAnswer, "");
+  SendEvent(testEvent2);
+  EXPECT_EQ(testAnswer, "I am a test string too");
+  /***/
+  EventSystemTests::AppendEvent testEvent3(" adding words!");
+  SendEvent(testEvent3);
+  EXPECT_EQ(testAnswer, "I am a test string too adding words!");
+}
+
+TEST_F(EventSystemTestFixture, TestMultipleCallbacks)
 {
   /*Registrations*/
   RegisterNormalCallback(EventSystemTests::FooEvent, EventSystemTests::SimpleCallback);
@@ -99,10 +147,9 @@ TEST(EventSystemTests, TestNormalCallbacks)
   EXPECT_EQ(testAnswer, "I am a test string adding words!");
   /**/
   EXPECT_EQ(EventSystemTests::callbackGlobal, 3);
-  EventSystem::Teardown();
 }
 
-TEST(EventSystemTests, TestOpposingNormalCallbacks)
+TEST_F(EventSystemTestFixture, TestDifferenciatingCallbacks)
 {
   /*Registrations*/
   std::string testAnswer;
@@ -151,10 +198,9 @@ TEST(EventSystemTests, TestOpposingNormalCallbacks)
   EXPECT_EQ(testAnswer, "I am a test string adding words!");
   EXPECT_EQ(opposingAnswer, " adding words!");
   /**/
-  EventSystem::Teardown();
 }
 
-TEST(EventSystemTests, TestClassCallbacks)
+TEST_F(EventSystemTestFixture, TestClassCallbacks)
 {
   EventSystemTests::SimpleClass simpleClass;
   simpleClass.SetupMessages();
