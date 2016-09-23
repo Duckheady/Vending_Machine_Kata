@@ -89,7 +89,7 @@ void DisplayManager::OnCurrencyTaken(const Event* e)
   SetDefaultMessage();
 }
 
-void DisplayManager::OnDispenseItem(const Event* e)
+void DisplayManager::OnDispenseItem(const Event*)
 {
   credit = 0.0f;
   currentDisplay = &DisplayManager::DisplayThanks;
@@ -109,7 +109,7 @@ void DisplayManager::OnNotEnoughMoney(const Event* e)
   currentDisplay = &DisplayManager::DisplayProductPrice;
 }
 
-void DisplayManager::OnSoldOut(const Event* e)
+void DisplayManager::OnSoldOut(const Event*)
 {
   currentDisplay = &DisplayManager::DisplaySoldOut;
 }

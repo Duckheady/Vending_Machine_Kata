@@ -62,7 +62,7 @@ TEST(CurrencyTests, TemplateCoinLoadingTest)
   std::ifstream stream("testCurrencies.json");
   std::vector<CoinTemplate> coins;
   CurrencyTests::TestLoad(stream, root, coins);
-  EXPECT_EQ(coins.size(), 3);
+  EXPECT_EQ(coins.size(), 3u);
 }
 
 TEST(CurrencyTests, CoinEquvilancyTests)
@@ -130,7 +130,7 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   RegisterNormalCallback
     (CurrencyRejected, 
     /*Captures CurrencyRejected event*/
-    [&tookCurrency] (const Event* gEvent) { tookCurrency = false; }
+    [&tookCurrency] (const Event*) { tookCurrency = false; }
     );
   Json::Value testCoin;
   /*Test both a bit over*/
@@ -235,3 +235,4 @@ TEST(CurrencyManagerTests, ValidEventsSent)
   EXPECT_FALSE(tookCurrency);
   EventSystem::Teardown();
 }
+

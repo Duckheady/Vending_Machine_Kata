@@ -38,3 +38,4 @@ public:
   unsigned dispenserId;
   DispenseCoin(unsigned id) : Event(TYPE_ID(DispenseCoin)), dispenserId(id) {}
 };
+

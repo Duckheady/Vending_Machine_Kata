@@ -8,6 +8,7 @@
 *    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
 ***********************************************************************************/
 #pragma once
+
 #define DEFAULT_MESSAGE "INSERT COIN"
 #define EXACT_CHANGE_MESSAGE "EXACT CHANGE"
 #define SOLD_OUT_MESSAGE "SOLD OUT"

@@ -8,7 +8,7 @@
 ***********************************************************************************/
 #include "EventSystem.hpp"
 
-DefineSingleton(EventSystem);
+DefineSingleton(EventSystem)
 
 EventSystem::~EventSystem()
 {

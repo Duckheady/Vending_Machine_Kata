@@ -103,11 +103,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\include\CoinDispenser.cpp" />
-    <ClCompile Include="..\include\ConsoleManager.cpp" />
-    <ClCompile Include="..\include\DisplayManager.cpp" />
+    <ClCompile Include="..\source\CoinDispenser.cpp" />
+    <ClCompile Include="..\source\ConsoleManager.cpp" />
     <ClCompile Include="..\source\Currency.cpp" />
     <ClCompile Include="..\source\CurrencyManager.cpp" />
+    <ClCompile Include="..\source\DisplayManager.cpp" />
     <ClCompile Include="..\source\EventSystem.cpp" />
     <ClCompile Include="..\source\main.cpp" />
     <ClCompile Include="..\third_party_software\googletest\gtest-all.cc" />

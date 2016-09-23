@@ -8,7 +8,6 @@
 *    This kata was developed for the purpose of displaying my ability to Pillar Technologies
 *    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
 ***********************************************************************************/
-#pragma once
 
 #include "CoinDispenser.hpp"
 #include "DispenserEvents.hpp"
@@ -47,7 +46,7 @@ CoinDispenser::CoinDispenser(const Json::Value& currencies, const Json::Value& i
     if(currencies[i]["type"].asString() == "Coin")
     {
       dispensers.push_back(currencies[i]);
-      totalChangeValue += dispensers[i].numberOfCoins * dispensers[i].coinValue;
+      totalChangeValue += (float)dispensers[i].numberOfCoins * dispensers[i].coinValue;
     }
   }
   /*Sort for the greedy algorthm found in OnDispenseChange(...)*/

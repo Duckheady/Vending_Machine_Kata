@@ -8,6 +8,7 @@
 ***********************************************************************************/
 
 #pragma once
+
 #include "Event.hpp"
 #include <map>
 #include <list>
@@ -87,3 +88,4 @@ public:
 /*Quicker way to say BroadcastEvent... interupts program flow*/
 #define SendEvent(Event) \
   EventSystem::GetInstance()->BroadcastEvent(&Event);
+

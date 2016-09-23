@@ -48,7 +48,7 @@ TEST(CoinDispenserTests, SimpleDispenseTests)
   std::ifstream currencyStream("testCurrencies.json");
   std::ifstream itemStream("testItems.json");
   CoinDispenserTests::TestLoad(currencyStream, itemStream, currencyRoot, itemRoot);
-  ASSERT_EQ(currencyRoot.size(), 3);
+  ASSERT_EQ(currencyRoot.size(), 3u);
   ASSERT_FLOAT_EQ(currencyRoot[0]["value"].asFloat(), .10f);
   ASSERT_FLOAT_EQ(currencyRoot[1]["value"].asFloat(), .25f);
   ASSERT_FLOAT_EQ(currencyRoot[2]["value"].asFloat(), .05f);
@@ -69,30 +69,30 @@ TEST(CoinDispenserTests, SimpleDispenseTests)
   DispenseChange dispenseChange(.50);
   /*****Begin tests*****/  
   SendEvent(dispenseChange);
-  EXPECT_EQ(coinsDispensed[0], 0); /*.10*/
-  EXPECT_EQ(coinsDispensed[1], 2); /*.25*/
-  EXPECT_EQ(coinsDispensed[2], 0); /*.05*/
+  EXPECT_EQ(coinsDispensed[0], 0u); /*.10*/
+  EXPECT_EQ(coinsDispensed[1], 2u); /*.25*/
+  EXPECT_EQ(coinsDispensed[2], 0u); /*.05*/
   CoinDispenserTests::ResetArray(coinsDispensed);
   /***/  
   dispenseChange = .65f;
   SendEvent(dispenseChange);
-  EXPECT_EQ(coinsDispensed[0], 1);
-  EXPECT_EQ(coinsDispensed[1], 2);
-  EXPECT_EQ(coinsDispensed[2], 1);
+  EXPECT_EQ(coinsDispensed[0], 1u);
+  EXPECT_EQ(coinsDispensed[1], 2u);
+  EXPECT_EQ(coinsDispensed[2], 1u);
   CoinDispenserTests::ResetArray(coinsDispensed);
   /***/
   dispenseChange = .20f;
   SendEvent(dispenseChange);
-  EXPECT_EQ(coinsDispensed[0], 2);
-  EXPECT_EQ(coinsDispensed[1], 0);
-  EXPECT_EQ(coinsDispensed[2], 0);
+  EXPECT_EQ(coinsDispensed[0], 2u);
+  EXPECT_EQ(coinsDispensed[1], 0u);
+  EXPECT_EQ(coinsDispensed[2], 0u);
   CoinDispenserTests::ResetArray(coinsDispensed);
   /***/
   dispenseChange = .05f;
   SendEvent(dispenseChange);
-  EXPECT_EQ(coinsDispensed[0], 0);
-  EXPECT_EQ(coinsDispensed[1], 0);
-  EXPECT_EQ(coinsDispensed[2], 1);
+  EXPECT_EQ(coinsDispensed[0], 0u);
+  EXPECT_EQ(coinsDispensed[1], 0u);
+  EXPECT_EQ(coinsDispensed[2], 1u);
   CoinDispenserTests::ResetArray(coinsDispensed);
   /***/
   EventSystem::Teardown();
@@ -104,13 +104,13 @@ TEST(CoinDispenserTests, LowCoinEnvironmentTests)
   std::ifstream currencyStream("lowCoinCurrencies.json");
   std::ifstream itemStream("testItems.json");
   CoinDispenserTests::TestLoad(currencyStream, itemStream, currencyRoot, itemRoot);
-  ASSERT_EQ(currencyRoot.size(), 3);
+  ASSERT_EQ(currencyRoot.size(), 3u);
   ASSERT_FLOAT_EQ(currencyRoot[0]["value"].asFloat(), .10f);
   ASSERT_FLOAT_EQ(currencyRoot[1]["value"].asFloat(), .25f);
   ASSERT_FLOAT_EQ(currencyRoot[2]["value"].asFloat(), .05f);
-  ASSERT_EQ(currencyRoot[0]["numberOfCoins"].asUInt(), 6);
-  ASSERT_EQ(currencyRoot[1]["numberOfCoins"].asUInt(), 0);
-  ASSERT_EQ(currencyRoot[2]["numberOfCoins"].asUInt(), 1);
+  ASSERT_EQ(currencyRoot[0]["numberOfCoins"].asUInt(), 6u);
+  ASSERT_EQ(currencyRoot[1]["numberOfCoins"].asUInt(), 0u);
+  ASSERT_EQ(currencyRoot[2]["numberOfCoins"].asUInt(), 1u);
   std::vector<unsigned> coinsDispensed;
   coinsDispensed.resize(currencyRoot.size());
   bool exactChangeFlag = false;
@@ -161,9 +161,9 @@ TEST(CoinDispenserTests, LowCoinEnvironmentTests)
   /***/
   DispenseChange dispenseChange(.80f);
   SendEvent(dispenseChange); /*Dispensers: 2,0,1*/
-  EXPECT_EQ(coinsDispensed[0], 5);
-  EXPECT_EQ(coinsDispensed[1], 1);
-  EXPECT_EQ(coinsDispensed[2], 1);
+  EXPECT_EQ(coinsDispensed[0], 5u);
+  EXPECT_EQ(coinsDispensed[1], 1u);
+  EXPECT_EQ(coinsDispensed[2], 1u);
   CoinDispenserTests::ResetArray(coinsDispensed);
   EXPECT_FLOAT_EQ(cDispenser.GetTotalChangeValue(), .25f);
   EXPECT_TRUE(exactChangeFlag);
@@ -171,9 +171,9 @@ TEST(CoinDispenserTests, LowCoinEnvironmentTests)
      to pay back the user.**/
   dispenseChange = .50f;
   SendEvent(dispenseChange); /*Only returns .25... Dispensers: 0,0,0*/
-  EXPECT_EQ(coinsDispensed[0], 2);
-  EXPECT_EQ(coinsDispensed[1], 0);
-  EXPECT_EQ(coinsDispensed[2], 1);
+  EXPECT_EQ(coinsDispensed[0], 2u);
+  EXPECT_EQ(coinsDispensed[1], 0u);
+  EXPECT_EQ(coinsDispensed[2], 1u);
   EXPECT_FLOAT_EQ(cDispenser.GetTotalChangeValue(), 0.0f);
   EXPECT_TRUE(exactChangeFlag);
   CoinDispenserTests::ResetArray(coinsDispensed);

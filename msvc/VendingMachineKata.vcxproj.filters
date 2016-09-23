@@ -51,16 +51,7 @@
     <ClCompile Include="..\third_party_software\jsoncpp\json_writer.cpp">
       <Filter>_Third_Party_Libraries\JsonCpp</Filter>
     </ClCompile>
-    <ClCompile Include="..\include\DisplayManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\EventSystem.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\ConsoleManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\CoinDispenser.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\source\Currency.cpp">
@@ -68,6 +59,15 @@
     </ClCompile>
     <ClCompile Include="..\source\CurrencyManager.cpp">
       <Filter>Source\CurrencyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\CoinDispenser.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\ConsoleManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\DisplayManager.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -54,7 +54,7 @@ namespace EventSystemTests
     {
       testAnswer = ((FooEvent*)e)->data;
     }
-    void OnBar(const Event* e)
+    void OnBar(const Event*)
     {
       ++testInt;
     }

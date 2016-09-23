@@ -82,11 +82,11 @@ protected:
   {
     ++dispensersTriggered[((const DispenseCoin*)e)->dispenserId];
   }
-  void OnCurrencyTaken(const Event* e)
+  void OnCurrencyTaken(const Event*)
   {
     lastCoinWasAccepted = true;
   }
-  void OnCurrencyRejected(const Event* e)
+  void OnCurrencyRejected(const Event*)
   {
     lastCoinWasAccepted = false;
   }
@@ -183,10 +183,10 @@ TEST_F(VendingMachineIntegrationTests, SimplePurchase)
   SendEvent(*sendNickel); /*Credit: .65*/
   EXPECT_EQ(displayManager->GetDisplay(), "0.65");
   SendEvent(*chooseItem2);
-  EXPECT_EQ(lastItemDispensed, 2); /*Should have vended item 2*/
-  EXPECT_EQ(dispensersTriggered[0], 0); /*No dispensers should have been triggered*/
-  EXPECT_EQ(dispensersTriggered[1], 0);
-  EXPECT_EQ(dispensersTriggered[2], 0);
+  EXPECT_EQ(lastItemDispensed, 2u); /*Should have vended item 2*/
+  EXPECT_EQ(dispensersTriggered[0], 0u); /*No dispensers should have been triggered*/
+  EXPECT_EQ(dispensersTriggered[1], 0u);
+  EXPECT_EQ(dispensersTriggered[2], 0u);
   EXPECT_EQ(displayManager->GetDisplay(), THANKS_MESSAGE);
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
 }
@@ -202,10 +202,10 @@ TEST_F(VendingMachineIntegrationTests, SimplePurchaseWithChange)
   SendEvent(*sendDime); /*Credit: .70*/
   EXPECT_EQ(displayManager->GetDisplay(), "0.70");
   SendEvent(*chooseItem2);
-  EXPECT_EQ(lastItemDispensed, 2); /*Should have vended item 2*/
-  EXPECT_EQ(dispensersTriggered[0], 0); /*Nickel's dispenser should have been triggered once*/
-  EXPECT_EQ(dispensersTriggered[1], 0);
-  EXPECT_EQ(dispensersTriggered[2], 1);
+  EXPECT_EQ(lastItemDispensed, 2u); /*Should have vended item 2*/
+  EXPECT_EQ(dispensersTriggered[0], 0u); /*Nickel's dispenser should have been triggered once*/
+  EXPECT_EQ(dispensersTriggered[1], 0u);
+  EXPECT_EQ(dispensersTriggered[2], 1u);
   EXPECT_EQ(displayManager->GetDisplay(), THANKS_MESSAGE);
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
 }
@@ -214,7 +214,7 @@ TEST_F(VendingMachineIntegrationTests, DisplayPriceThanPurchase)
 {
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
   SendEvent(*chooseItem0);
-  EXPECT_EQ(lastItemDispensed, -1); /*No item vended*/
+  EXPECT_EQ(lastItemDispensed, (unsigned)-1); /*No item vended*/
   EXPECT_EQ(displayManager->GetDisplay(), "PRICE 1.00"); /*Item0's cost is 1.00*/
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
   SendEvent(*sendDime); /*Credit: .10*/
@@ -227,7 +227,7 @@ TEST_F(VendingMachineIntegrationTests, DisplayPriceThanPurchase)
   SendEvent(*sendDime); /*Credit: 1.00*/
   EXPECT_EQ(displayManager->GetDisplay(), "1.00");
   SendEvent(*chooseItem0);
-  EXPECT_EQ(lastItemDispensed, 0); /*Should have vended item 0*/
+  EXPECT_EQ(lastItemDispensed, 0u); /*Should have vended item 0*/
   EXPECT_EQ(displayManager->GetDisplay(), THANKS_MESSAGE);
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
 }
@@ -243,10 +243,10 @@ TEST_F(VendingMachineIntegrationTests, CoinReturnTest)
   SendEvent(*sendNickel); /*Credit: .80*/
   EXPECT_EQ(displayManager->GetDisplay(), "0.80");
   SendEvent(*changeReturnEvent);
-  EXPECT_EQ(dispensersTriggered[0], 0); /*0 dimes*/ 
-  EXPECT_EQ(dispensersTriggered[1], 3); /*3 quarters: .75*/
-  EXPECT_EQ(dispensersTriggered[2], 1); /*1 nickel: .05*/
-  EXPECT_EQ(lastItemDispensed, -1); /*Should have not vended anything*/
+  EXPECT_EQ(dispensersTriggered[0], 0u); /*0 dimes*/ 
+  EXPECT_EQ(dispensersTriggered[1], 3u); /*3 quarters: .75*/
+  EXPECT_EQ(dispensersTriggered[2], 1u); /*1 nickel: .05*/
+  EXPECT_EQ(lastItemDispensed, (unsigned)-1); /*Should have not vended anything*/
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
 }
 
@@ -271,10 +271,10 @@ TEST_F(VendingMachineIntegrationTests, CoinReturnTestCoinVariance)
   EXPECT_TRUE(lastCoinWasAccepted);
   EXPECT_EQ(displayManager->GetDisplay(), "0.45");
   SendEvent(*changeReturnEvent);
-  EXPECT_EQ(dispensersTriggered[0], 2); /*2 dimes: .20*/ 
-  EXPECT_EQ(dispensersTriggered[1], 1); /*1 quarters: .25*/
-  EXPECT_EQ(dispensersTriggered[2], 0); /*0 nickel: 0.00*/
-  EXPECT_EQ(lastItemDispensed, -1); /*Should have not vended anything*/
+  EXPECT_EQ(dispensersTriggered[0], 2u); /*2 dimes: .20*/ 
+  EXPECT_EQ(dispensersTriggered[1], 1u); /*1 quarters: .25*/
+  EXPECT_EQ(dispensersTriggered[2], 0u); /*0 nickel: 0.00*/
+  EXPECT_EQ(lastItemDispensed, (unsigned)-1); /*Should have not vended anything*/
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE);
 }
 
@@ -307,10 +307,10 @@ TEST_F(LowResourceVendingMachineIntegrationTests, SimplePurchase)
   SendEvent(*sendNickel); /*Credit: .50*/
   EXPECT_EQ(displayManager->GetDisplay(), "0.50");
   SendEvent(*chooseItem1);
-  EXPECT_EQ(lastItemDispensed, 1); /*Should have vended item 1*/
-  EXPECT_EQ(dispensersTriggered[0], 0); /*No dispensers should have been triggered*/
-  EXPECT_EQ(dispensersTriggered[1], 0);
-  EXPECT_EQ(dispensersTriggered[2], 0);
+  EXPECT_EQ(lastItemDispensed, 1u); /*Should have vended item 1*/
+  EXPECT_EQ(dispensersTriggered[0], 0u); /*No dispensers should have been triggered*/
+  EXPECT_EQ(dispensersTriggered[1], 0u);
+  EXPECT_EQ(dispensersTriggered[2], 0u);
   EXPECT_EQ(displayManager->GetDisplay(), THANKS_MESSAGE);
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE); /*Now have 1.10 so should be default*/
 }
@@ -323,10 +323,10 @@ TEST_F(LowResourceVendingMachineIntegrationTests, PurchaseChipsTwice)
   SendEvent(*sendDime); /*Credit: .45*/
   SendEvent(*sendNickel); /*Credit: .50*/
   SendEvent(*chooseItem1);
-  EXPECT_EQ(lastItemDispensed, 1); /*Should have vended item 1*/
-  EXPECT_EQ(dispensersTriggered[0], 0); /*No dispensers should have been triggered*/
-  EXPECT_EQ(dispensersTriggered[1], 0);
-  EXPECT_EQ(dispensersTriggered[2], 0);
+  EXPECT_EQ(lastItemDispensed, 1u); /*Should have vended item 1*/
+  EXPECT_EQ(dispensersTriggered[0], 0u); /*No dispensers should have been triggered*/
+  EXPECT_EQ(dispensersTriggered[1], 0u);
+  EXPECT_EQ(dispensersTriggered[2], 0u);
   EXPECT_EQ(displayManager->GetDisplay(), THANKS_MESSAGE);
   EXPECT_EQ(displayManager->GetDisplay(), DEFAULT_MESSAGE); /*Now have 1.10 so should be default*/
   /***Try again***/
@@ -334,16 +334,16 @@ TEST_F(LowResourceVendingMachineIntegrationTests, PurchaseChipsTwice)
   SendEvent(*sendQuarter); /*Credit: .25*/
   SendEvent(*sendQuarter); /*Credit: .50*/
   SendEvent(*chooseItem1);
-  EXPECT_EQ(lastItemDispensed, -1); /*Should have vended nothing*/
-  EXPECT_EQ(dispensersTriggered[0], 0); /*No dispensers should have been triggered*/
-  EXPECT_EQ(dispensersTriggered[1], 0);
-  EXPECT_EQ(dispensersTriggered[2], 0);
+  EXPECT_EQ(lastItemDispensed, (unsigned)-1); /*Should have vended nothing*/
+  EXPECT_EQ(dispensersTriggered[0], 0u); /*No dispensers should have been triggered*/
+  EXPECT_EQ(dispensersTriggered[1], 0u);
+  EXPECT_EQ(dispensersTriggered[2], 0u);
   EXPECT_EQ(displayManager->GetDisplay(), SOLD_OUT_MESSAGE);
   EXPECT_EQ(displayManager->GetDisplay(), "0.50");
   SendEvent(*changeReturnEvent);
-  EXPECT_EQ(dispensersTriggered[0], 0); 
-  EXPECT_EQ(dispensersTriggered[1], 2); /*2 Quarters*/
-  EXPECT_EQ(dispensersTriggered[2], 0);
+  EXPECT_EQ(dispensersTriggered[0], 0u); 
+  EXPECT_EQ(dispensersTriggered[1], 2u); /*2 Quarters*/
+  EXPECT_EQ(dispensersTriggered[2], 0u);
 }
 
 TEST_F(LowResourceVendingMachineIntegrationTests, VariantCurrencyTest)
@@ -370,9 +370,10 @@ TEST_F(LowResourceVendingMachineIntegrationTests, VariantCurrencyTest)
   EXPECT_TRUE(lastCoinWasAccepted);
   EXPECT_EQ(displayManager->GetDisplay(), "0.45");
   SendEvent(*changeReturnEvent);
-  EXPECT_EQ(dispensersTriggered[0], 2); /*2 dimes: .20*/ 
-  EXPECT_EQ(dispensersTriggered[1], 1); /*1 quarters: .25*/
-  EXPECT_EQ(dispensersTriggered[2], 0); /*0 nickel: 0.00*/
-  EXPECT_EQ(lastItemDispensed, -1); /*Should have not vended anything*/
+  EXPECT_EQ(dispensersTriggered[0], 2u); /*2 dimes: .20*/ 
+  EXPECT_EQ(dispensersTriggered[1], 1u); /*1 quarters: .25*/
+  EXPECT_EQ(dispensersTriggered[2], 0u); /*0 nickel: 0.00*/
+  EXPECT_EQ(lastItemDispensed, (unsigned)-1); /*Should have not vended anything*/
   EXPECT_EQ(displayManager->GetDisplay(), EXACT_CHANGE_MESSAGE);
 }
+

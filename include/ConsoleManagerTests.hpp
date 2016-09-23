@@ -50,7 +50,7 @@ TEST(ConsoleManagerTests, TemplateConsoleTests)
   std::ifstream stream("testItems.json");
   std::vector<float> items;
   ConsoleManagerTests::TestLoad(stream, root, items);
-  EXPECT_EQ(items.size(), 3);
+  EXPECT_EQ(items.size(), 3u);
 }
 
 TEST(ConsoleManagerTests, VerifiedCoinTests)
@@ -119,7 +119,7 @@ TEST(ConsoleManagerTests, SelectItemTests)
    SendEvent(addCurrency);
    SendEvent(itemChoice);
    EXPECT_FALSE(notEnoughMoney);
-   EXPECT_EQ(itemIndex, 0);
+   EXPECT_EQ(itemIndex, 0u);
    EXPECT_FLOAT_EQ(changeDue, .50f);
    EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
    changeDue = 0.0f;
@@ -136,7 +136,7 @@ TEST(ConsoleManagerTests, SelectItemTests)
    itemChoice.index = 1;
    SendEvent(itemChoice);
    EXPECT_FALSE(notEnoughMoney);
-   EXPECT_EQ(itemIndex, 1);
+   EXPECT_EQ(itemIndex, 1u);
    EXPECT_FLOAT_EQ(changeDue, .25f);
    EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
    changeDue = 0.0f;
@@ -167,7 +167,7 @@ TEST(ConsoleManagerTests, SelectItemTests)
    SendEvent(addCurrency);
    SendEvent(itemChoice);
    EXPECT_FALSE(notEnoughMoney);
-   EXPECT_EQ(itemIndex, 0);
+   EXPECT_EQ(itemIndex, 0u);
    EXPECT_FLOAT_EQ(changeDue, .25f);
    EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
    changeDue = 0.0f;
@@ -264,17 +264,17 @@ TEST(ConsoleManagerTests, SoldOutTests)
   SendEvent(addCurrency)
   SendEvent(itemChoice);
   EXPECT_FALSE(itemDispensed);
-  EXPECT_EQ(soldOutIndex, 2);
+  EXPECT_EQ(soldOutIndex, 2u);
   /*Buy chips, then try to buy again*/
   itemChoice.index = 1;
   SendEvent(addCurrency);
   SendEvent(itemChoice);
   EXPECT_TRUE(itemDispensed);
-  EXPECT_EQ(itemIndex, 1);
+  EXPECT_EQ(itemIndex, 1u);
   SendEvent(addCurrency);
   SendEvent(itemChoice);
   EXPECT_FALSE(itemDispensed);
-  EXPECT_EQ(soldOutIndex, 1);  
+  EXPECT_EQ(soldOutIndex, 1u);  
   /**Try to buy candy, then add money and buy soda.*/
   CurrencyTaken addCurrency2(.65f, TYPE_ID(CoinTemplate));
   CurrencyTaken addCurrency3(.35f, TYPE_ID(CoinTemplate));
@@ -282,12 +282,12 @@ TEST(ConsoleManagerTests, SoldOutTests)
   itemChoice.index = 2;
   SendEvent(itemChoice);
   EXPECT_FALSE(itemDispensed);
-  EXPECT_EQ(soldOutIndex, 2);
+  EXPECT_EQ(soldOutIndex, 2u);
   SendEvent(addCurrency3);
   itemChoice.index = 0;
   SendEvent(itemChoice);
   EXPECT_TRUE(itemDispensed);
-  EXPECT_EQ(itemIndex, 0);
+  EXPECT_EQ(itemIndex, 0u);
   /**/
   EventSystem::Teardown();
 }
@@ -300,7 +300,7 @@ TEST(ConsoleManagerTests, ExactChangeTests)
   ConsoleManagerTests::TestLoad(stream, root, items);
   ConsoleManager mgr(root);
   /*Quanities: Coke : 2, Chips: 1, Candy: 0*/
-  bool itemDispensed = false;
+  //bool itemDispensed = false;
   unsigned itemIndex = -1;
   float changeDue = -1.0f;
   RegisterNormalCallback
@@ -331,7 +331,7 @@ TEST(ConsoleManagerTests, ExactChangeTests)
   SendEvent(addCurrency)
   SendEvent(itemChoice);
   EXPECT_FLOAT_EQ(changeDue, -1.0f);
-  EXPECT_EQ(itemIndex, 1);
+  EXPECT_EQ(itemIndex, 1u);
   EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
   itemIndex = -1;
   changeDue = -1.0f;
@@ -339,7 +339,7 @@ TEST(ConsoleManagerTests, ExactChangeTests)
   SendEvent(addCurrency2);
   SendEvent(itemChoice);
   EXPECT_FLOAT_EQ(changeDue, -1.0f);
-  EXPECT_EQ(itemIndex, 1);
+  EXPECT_EQ(itemIndex, 1u);
   EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
   itemIndex = -1;
   changeDue = -1.0f;
@@ -349,7 +349,7 @@ TEST(ConsoleManagerTests, ExactChangeTests)
   SendEvent(exactChangeEvent);
   SendEvent(itemChoice);
   EXPECT_FLOAT_EQ(changeDue, .50f);
-  EXPECT_EQ(itemIndex, 1);
+  EXPECT_EQ(itemIndex, 1u);
   EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
   itemIndex = -1;
   changeDue = -1.0f;
@@ -359,9 +359,8 @@ TEST(ConsoleManagerTests, ExactChangeTests)
   SendEvent(exactChangeEvent);
   SendEvent(changeReturn);
   EXPECT_FLOAT_EQ(changeDue, 1.00f);
-  EXPECT_EQ(itemIndex, -1);
+  EXPECT_EQ(itemIndex, (unsigned)-1);
   EXPECT_FLOAT_EQ(mgr.GetCurrentAmountInserted(), 0.0f);
   /***/
   EventSystem::Teardown();
 }
-
