@@ -6,6 +6,19 @@
 *    in the hopes of being hired by Pillar. Please contact me with questions at nlouks@digipen.edu
 ***************************************************************************************************/
 
+New material since last review:
+ -Tests have been divided up to individually test each element as suggested. This has made the tests
+  go up to 65 tests, but easier to manage in isolation.
+ -New makefile for gnu. This file is found in the root directory. I recommend using make 
+  [debug|release|deliverable]  make by itself generates all configurations. I didn't build a configure
+  file as the differences were so small for this project. After running make, execute any executables
+  from the /bin directory. (i.e. the working directory must be /bin) Debug and Release builds are found
+  in /bin/<configuration> with the Visual Studio executables. Each executable from gnu is called 
+  vending_machine_<configuration>.exe.
+ -Only current block is the fail condition I asked about. I am unsure how to fail properly should fail
+  conditions be met. My current suggestion is to have the display system display "OUT_OF_ORDER."
+
+
 Summary:
  This project implements the six stories described at https://github.com/guyroyse/vending-machine-kata.
  The project is built in C++ utilizing the VS2010 compiler. This project utilizes GoogleTest and 
@@ -49,16 +62,11 @@ Notes:
    -Macros are all caps except when I want it to appear to be a global function i.e. SendEvent().
  -Check out VendingMachineIntegrationTests.hpp for a good place to start code evaluation as it has some 
   comments in there relating to expectations.
- -Many tests purposefully violate the DRY principle because I value my errors to tell me where the
-  problem is. I hope Pillar has the same value.
 
-Post-Mordem Thoughts:
-  This was a pretty amusing test. I haven't used Google Test in a couple years, so it was intersting using
-  the library again. The test cases came out pretty nice; however, I am still a bit concerned how readable
-  the tests are to you developers, but I hope that it is legible enough. If you need clarification, I can
-  do so, just send me an email. My big question to the customer if this project were to continue would be
-  the expected behavior if paper currency were implemented and returning thier money still must be honored,
-  since it is possible to request money back in coins that is more than the inserted paper currency.
-  Additionally, I would like to add some randomized tests and crash tests, but I wanted to actually get
-  this project to you in the timeframe I promised. I hope I didn't go overboard on this kata. I have a 
-  tendancy of striving for perfection as long as I can meet deliverables in a timely manner.
+
+Post-Mordem Thoughts and Notes:
+  I am pleased by the comments thus far about my code. I see the flaw with tests and I have worked to mitigate
+  the issue. I have also worked in the GNU compiler as requested developing a makefile to assist in development.
+  I cannot remember if the standard GNU compiler comes with the binutils module, but you will need that if you
+  don't have it as it is used to separate the symbols from the compiler in the development build. If not, the debug
+  and release build still have the symbols baked into the executable so it should be sufficent for testing.
