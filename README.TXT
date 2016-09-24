@@ -17,6 +17,7 @@ New material since last review:
   vending_machine_<configuration>.exe.
  -Only current block is the fail condition I asked about. I am unsure how to fail properly should fail
   conditions be met. My current suggestion is to have the display system display "OUT_OF_ORDER."
+ -New Post-Mordem thoughts section.
 
 
 Summary:
@@ -64,9 +65,11 @@ Notes:
   comments in there relating to expectations.
 
 
-Post-Mordem Thoughts and Notes:
-  I am pleased by the comments thus far about my code. I see the flaw with tests and I have worked to mitigate
-  the issue. I have also worked in the GNU compiler as requested developing a makefile to assist in development.
-  I cannot remember if the standard GNU compiler comes with the binutils module, but you will need that if you
-  don't have it as it is used to separate the symbols from the compiler in the development build. If not, the debug
-  and release build still have the symbols baked into the executable so it should be sufficent for testing.
+Post-Mordem Thoughts:
+  I am pleased by the comments thus far about my code. I see the flaw with tests and I have worked to 
+  mitigate the issue. I have also worked in the GNU compiler as requested developing a makefile to 
+  assist in development. I cannot remember if the standard GNU compiler comes with the binutils module,
+  but you will need that if you don't have it as it is used to separate the symbols from the compiler in
+  the development build. If not, the  debug and release build still have the symbols baked into the 
+  executable so it should be sufficent for testing. Other than that, it was amusing working on this for 
+  a bit longer. I am not an amazing build engineer, but I can build simple things as needed.
