@@ -14,12 +14,14 @@
 #include <json\reader.h>
 #include "EventSystem.hpp"
 #include "CurrencyEvents.hpp"
-#include <assert.h>
+#include "FailureExceptions.hpp"
 
 ConsoleManager::Item::Item(const Json::Value& value)
 {
-  assert(value.isMember("cost"));
-  assert(value.isMember("quantity"));
+  if(!value.isMember("cost"))
+    throw BadFileException();
+  if(!value.isMember("quantity"))
+    throw BadFileException();
   price = value["cost"].asFloat();
   quantity = value["quantity"].asUInt();
 }
@@ -27,7 +29,8 @@ ConsoleManager::ConsoleManager(const Json::Value& root)
 {
   currentAmountInserted = 0;
   exactChangeOnly = false;
-  assert(root.isArray());
+  if(!root.isArray())
+    throw BadFileException();
   for(unsigned i = 0; i < root.size(); ++i)
     items.push_back(Item(root[i]));
   RegisterEvents();

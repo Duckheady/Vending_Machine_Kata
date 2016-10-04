@@ -35,6 +35,20 @@ protected:
   }
 };
 
+TEST_F(DisplayManagerTests, SetOutOfOrderTest)
+{
+  dManager->SetOutOfOrder();
+  CurrencyTaken currencyTaken(.25f, 0);
+  CurrencyTaken currencyTaken2(.75f, 0);
+  EXPECT_EQ(dManager->GetDisplay(), FAILURE_MESSAGE);
+  SendEvent(currencyTaken);
+  EXPECT_EQ(dManager->GetDisplay(), FAILURE_MESSAGE);
+  SendEvent(currencyTaken2);
+  EXPECT_EQ(dManager->GetDisplay(), FAILURE_MESSAGE);
+  SendEvent(currencyTaken);
+  EXPECT_EQ(dManager->GetDisplay(), FAILURE_MESSAGE);
+}
+
 TEST_F(DisplayManagerTests, DefaultCurrencyTakenTest)
 {
   /*Commented blocks are in test fixture*/

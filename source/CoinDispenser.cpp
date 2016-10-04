@@ -14,6 +14,7 @@
 #include "CurrencyEvents.hpp"
 #include "EventSystem.hpp"
 #include "Currency.hpp"
+#include "FailureExceptions.hpp"
 #include <algorithm>
 #include <assert.h>
 
@@ -22,9 +23,12 @@
 
 CoinDispenser::Dispenser::Dispenser(const Json::Value& jsonValue)
 {
-  assert(jsonValue.isMember("value"));
-  assert(jsonValue.isMember("numberOfCoins"));
-  assert(jsonValue.isMember("dispenserId"));
+  if(!jsonValue.isMember("value"))
+    throw BadFileException();
+  if(!jsonValue.isMember("numberOfCoins"))
+    throw BadFileException();
+  if(!jsonValue.isMember("dispenserId"))
+    throw BadFileException();
   coinValue = jsonValue["value"].asFloat();
   numberOfCoins = jsonValue["numberOfCoins"].asUInt();
   dispenserId = jsonValue["dispenserId"].asUInt();
@@ -37,12 +41,15 @@ bool CoinDispenser::DispenserSorter(const CoinDispenser::Dispenser& lhs, const C
 
 CoinDispenser::CoinDispenser(const Json::Value& currencies, const Json::Value& items) : totalChangeValue(0), maxItemValue(0)
 {
-  assert(currencies.isArray());
-  assert(items.isArray());
+  if(!currencies.isArray())
+    throw BadFileException();
+  if(!items.isArray())
+    throw BadFileException();
   /*Initializing coin dispensers first and tallying money*/
   for(unsigned i = 0; i < currencies.size(); ++i)
   {
-    assert(currencies[i].isMember("type"));
+    if(!currencies[i].isMember("type"))
+      throw BadFileException();
     if(currencies[i]["type"].asString() == "Coin")
     {
       dispensers.push_back(currencies[i]);
@@ -54,7 +61,8 @@ CoinDispenser::CoinDispenser(const Json::Value& currencies, const Json::Value& i
   /*Finding highest cost and setting it.*/
   for(unsigned i = 0; i < items.size(); ++i)
   {
-    assert(items[i].isMember("cost"));
+    if(!items[i].isMember("cost"))
+      throw BadFileException();
     if(items[i]["cost"] > maxItemValue)
       maxItemValue = items[i]["cost"].asFloat();
   }

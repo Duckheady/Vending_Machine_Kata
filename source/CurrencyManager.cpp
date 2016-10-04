@@ -2,16 +2,19 @@
 #include "Currency.hpp"
 #include "CurrencyEvents.hpp"
 #include "EventSystem.hpp"
+#include "FailureExceptions.hpp"
 #include <json\reader.h>
-#include <assert.h>
 
 CurrencyManager::CurrencyManager(const Json::Value& root)
 {
-  assert(root.isArray());
+  if(!root.isArray())
+    throw BadFileException();
   for(unsigned i = 0; i < root.size(); ++i)
   {
-    assert(root[i].isObject());
-    assert(root[i].isMember("type"));
+    if(!root[i].isObject())
+      throw BadFileException();
+    if(!root[i].isMember("type"))
+      throw BadFileException();
     /*Could define meta meta files but it seems like overkill for now*/
     if(root[i]["type"].asString() == "Coin")
     {

@@ -8,15 +8,21 @@
 ***********************************************************************************/
 
 #include "Currency.hpp"
-#include <assert.h>
+#include "FailureExceptions.hpp"
+//#include <assert.h>
 
 CoinTemplate::CoinTemplate(const Json::Value& dataTemplate)
 {
-  assert(dataTemplate.isMember("weight"));
-  assert(dataTemplate.isMember("weightErrorPercentage"));
-  assert(dataTemplate.isMember("radius"));
-  assert(dataTemplate.isMember("radiusErrorPercentage"));
-  assert(dataTemplate.isMember("value"));
+  if(!dataTemplate.isMember("weight"))
+    throw BadFileException();
+  if(!dataTemplate.isMember("weightErrorPercentage"))
+    throw BadFileException();
+  if(!dataTemplate.isMember("radius"))
+    throw BadFileException();
+  if(!dataTemplate.isMember("radiusErrorPercentage"))
+    throw BadFileException();
+  if(!dataTemplate.isMember("value"))
+    throw BadFileException();
   /**/
   weight = dataTemplate["weight"].asFloat();
   weightErr = dataTemplate["weightErrorPercentage"].asFloat();

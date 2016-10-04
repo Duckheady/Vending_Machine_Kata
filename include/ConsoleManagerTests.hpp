@@ -16,6 +16,7 @@
 #include "ConsoleEvents.hpp"
 #include "CurrencyEvents.hpp"
 #include "DispenserEvents.hpp"
+#include "FailureExceptions.hpp"
 
 namespace ConsoleManagerTests
 {
@@ -32,6 +33,21 @@ namespace ConsoleManagerTests
       hasMember = root[i].isMember("cost");
       EXPECT_TRUE(hasMember);
     }
+  }
+
+  void RemoveMemberAndTest(const std::string& member)
+  {
+    Json::Value badRoot;
+    std::ifstream stream("testItems.json");
+    ConsoleManagerTests::TestLoad(stream, badRoot);
+    badRoot[0].removeMember(member);
+    try
+    {
+      ConsoleManager badMgr(badRoot);
+      EventSystem::Teardown();
+      EXPECT_FALSE(true);
+    }
+    catch(BadFileException){}
   }
 
   /*Should never be called!*/
@@ -53,6 +69,28 @@ TEST(ConsoleManagerTests, FileLoadingTest2)
   Json::Value root;
   std::ifstream stream("lowQuantityTestItems.json");
   ConsoleManagerTests::TestLoad(stream, root);
+}
+
+TEST(ConsoleManagerTests, NoFileTest)
+{
+  Json::Value nullValue;
+  try
+  {
+    ConsoleManager badMgr(nullValue);
+    EventSystem::Teardown();
+    EXPECT_FALSE(true);
+  }
+  catch(BadFileException){}
+}
+
+TEST(ConsoleManagerTests, BadFileLoadingTest1)
+{
+  ConsoleManagerTests::RemoveMemberAndTest("cost");
+}
+
+TEST(ConsoleManagerTests, BadFileLoadingTest2)
+{
+  ConsoleManagerTests::RemoveMemberAndTest("quantity");
 }
 
 TEST(ConsoleManagerTests, VerifiedCoinTests)

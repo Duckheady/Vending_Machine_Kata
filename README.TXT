@@ -8,15 +8,18 @@
 
 New material since last review:
  -Tests have been divided up to individually test each element as suggested. This has made the tests
-  go up to 65 tests, but easier to manage in isolation.
+  go up to 84 tests, but easier to manage in isolation.
  -New makefile for gnu. This file is found in the root directory. I recommend using make 
   [debug|release|deliverable]  make by itself generates all configurations. I didn't build a configure
   file as the differences were so small for this project. After running make, execute any executables
   from the /bin directory. (i.e. the working directory must be /bin) Debug and Release builds are found
   in /bin/<configuration> with the Visual Studio executables. Each executable from gnu is called 
   vending_machine_<configuration>.exe.
- -Only current block is the fail condition I asked about. I am unsure how to fail properly should fail
-  conditions be met. My current suggestion is to have the display system display "OUT_OF_ORDER."
+ -In response to the assert feedback, I would have liked to just remove asserts in production as it is 
+  a vending machine, the files should always exist; however, since you have clarified that tests should
+  always be done, I have generated an exception to be used in order to subsequently be caught while
+  the system is being initializing, if it is thrown, the display manager will only display OUT OF ORDER
+  till the system is reset.  
  -New Post-Mordem thoughts section.
 
 

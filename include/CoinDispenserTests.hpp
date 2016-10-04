@@ -17,6 +17,7 @@
 #include "CurrencyEvents.hpp"
 #include "DispenserEvents.hpp"
 #include "Currency.hpp"
+#include "FailureExceptions.hpp"
 
 namespace CoinDispenserTests
 {
@@ -58,6 +59,103 @@ TEST(CoinDispenserTests, LoadingTest2)
   CoinDispenserTests::TestLoad(currencyStream, itemStream, currencyRoot, itemRoot);
   ASSERT_EQ(currencyRoot.size(), 3u);
   ASSERT_EQ(itemRoot.size(), 3u);
+}
+
+TEST(CoinDispenserTests, NoFileLoadingTest)
+{
+  Json::Value nullValue;
+  try
+  {
+    CoinDispenser dispenser(nullValue, nullValue);
+    EventSystem::Teardown();
+    EXPECT_FALSE(true);
+  }
+  catch(BadFileException) {}
+}
+
+class CoinDispenserBadStreamTests : public testing::Test
+{
+protected:
+  Json::Value currencyRoot, itemRoot;
+  CoinDispenser* cDispenser;
+  virtual void SetUp()
+  {
+    std::ifstream currencyStream("testCurrencies.json");
+    std::ifstream itemStream("testItems.json");
+    CoinDispenserTests::TestLoad(currencyStream, itemStream, currencyRoot, itemRoot);
+  }
+
+  void RemoveAndTestCurrency(const std::string& member)
+  {
+    currencyRoot[0].removeMember(member);
+    try
+    {
+      CoinDispenser dispenser(currencyRoot, itemRoot);
+      EventSystem::Teardown();
+      EXPECT_FALSE(true);
+    }
+    catch(BadFileException) {}
+  }
+  void RemoveAndTestItem(const std::string& member)
+  {
+    itemRoot[0].removeMember(member);
+    try
+    {
+      CoinDispenser dispenser(currencyRoot, itemRoot);
+      EventSystem::Teardown();
+      EXPECT_FALSE(true);
+    }
+    catch(BadFileException) {}
+  }
+};
+
+TEST_F(CoinDispenserBadStreamTests, NoFileLoadingTest1)
+{
+  Json::Value nullValue;
+  try
+  {
+    CoinDispenser dispenser(nullValue, itemRoot);
+    EventSystem::Teardown();
+    EXPECT_FALSE(true);
+  }
+  catch(BadFileException) {}
+}
+
+TEST_F(CoinDispenserBadStreamTests, NoFileLoadingTest2)
+{
+  Json::Value nullValue;
+  try
+  {
+    CoinDispenser dispenser(currencyRoot, nullValue);
+    EventSystem::Teardown();
+    EXPECT_FALSE(true);
+  }
+  catch(BadFileException) {}
+}
+ 
+TEST_F(CoinDispenserBadStreamTests, BadCurrencyStreamTest1)
+{
+  RemoveAndTestCurrency("type");
+}
+
+TEST_F(CoinDispenserBadStreamTests, BadCurrencyStreamTest2)
+{
+  RemoveAndTestCurrency("value");
+}
+
+TEST_F(CoinDispenserBadStreamTests, BadCurrencyStreamTest3)
+{
+  RemoveAndTestCurrency("numberOfCoins");
+}
+
+TEST_F(CoinDispenserBadStreamTests, BadCurrencyStreamTest4)
+{
+  RemoveAndTestCurrency("dispenserId");
+}
+
+TEST_F(CoinDispenserBadStreamTests, BadItemTest)
+{
+  RemoveAndTestItem("cost");
 }
 
 class CoinDispenserSimpleDispenseTests : public testing::Test
@@ -259,5 +357,3 @@ TEST_F(CoinDispenserLowCoinTests, CoinReturnTest2)
   EXPECT_FLOAT_EQ(cDispenser->GetTotalChangeValue(), 0.0f);
   EXPECT_TRUE(exactChangeFlag);
 }
-
-

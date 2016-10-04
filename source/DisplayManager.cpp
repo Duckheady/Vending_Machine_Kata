@@ -24,7 +24,7 @@
   there will not be many of them, and the logic need to be appended anyways for each new one
   the only thing we would gain is not recompiling for a new preexisting string, but then that has
   issues in things like displaying credit.*/
-DisplayManager::DisplayManager() : credit(0), isExactChange(false), lastPriceInquiry(0)
+DisplayManager::DisplayManager() : credit(0), isExactChange(false), lastPriceInquiry(0), isOutOfOrder(false)
 {
   currentDisplay = &DisplayManager::DisplayDefault;
   RegisterEvents();
@@ -135,5 +135,12 @@ void DisplayManager::RegisterEvents()
 /***/
 std::string DisplayManager::GetDisplay()
 {
+  if(isOutOfOrder)
+    return std::string(FAILURE_MESSAGE);
   return (this->*currentDisplay)();
+}
+
+void DisplayManager::SetOutOfOrder()
+{
+  isOutOfOrder = true;
 }

@@ -22,6 +22,7 @@
 #include "DisplayManager.hpp"
 #include "ConsoleManager.hpp"
 #include "CoinDispenser.hpp"
+#include "FailureExceptions.hpp"
 
 /******************************
 To be completely clear, there are three input events which represent the three inputs that the users can input.
@@ -375,5 +376,34 @@ TEST_F(LowResourceVendingMachineIntegrationTests, VariantCurrencyTest)
   EXPECT_EQ(dispensersTriggered[2], 0u); /*0 nickel: 0.00*/
   EXPECT_EQ(lastItemDispensed, (unsigned)-1); /*Should have not vended anything*/
   EXPECT_EQ(displayManager->GetDisplay(), EXACT_CHANGE_MESSAGE);
+}
+
+TEST(IntegrationBadLoadingTests, BadLoadingTest)
+{
+  CurrencyManager* currencyManager = nullptr;
+  ConsoleManager* consoleManager = nullptr;
+  DisplayManager* displayManager = nullptr;
+  CoinDispenser* coinDispenser = nullptr;
+  Json::Value nullValue;
+  displayManager = new DisplayManager;
+  try
+  {
+    coinDispenser = new CoinDispenser(nullValue, nullValue);
+    EXPECT_FALSE(true);
+    consoleManager = new ConsoleManager(nullValue);
+    EXPECT_FALSE(true);
+    currencyManager = new CurrencyManager(nullValue);
+    EXPECT_FALSE(true);
+    delete currencyManager;
+    delete consoleManager;
+    delete coinDispenser;
+  }
+  catch(BadFileException) 
+  {
+    displayManager->SetOutOfOrder();
+  }
+  EXPECT_EQ(displayManager->GetDisplay(), FAILURE_MESSAGE);
+  delete displayManager;
+  EventSystem::Teardown();
 }
 

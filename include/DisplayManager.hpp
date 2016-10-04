@@ -19,6 +19,7 @@ class DisplayManager
   float credit;
   bool isExactChange;
   float lastPriceInquiry;
+  bool isOutOfOrder;
   /**/
   std::string DisplayDefault(); /*INSERT COIN*/
   std::string DisplayCredit(); /*.25*/
@@ -39,5 +40,6 @@ class DisplayManager
 public:
   DisplayManager();
   std::string GetDisplay();
+  void SetOutOfOrder();
 };
 

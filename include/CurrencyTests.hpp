@@ -17,6 +17,7 @@
 #include "Currency.hpp"
 #include "CurrencyEvents.hpp"
 #include "CurrencyManager.hpp"
+#include "FailureExceptions.hpp"
 
 /*I violate DRY here so failed tests show the developers exactly what is wrong*/
 namespace CurrencyTests
@@ -54,6 +55,18 @@ namespace CurrencyTests
     CurrencyInserted cEvent(abstractCurrency);
     SendEvent(cEvent);
   }
+
+  void RemoveAndTest(Json::Value& data, const std::string& memberName)
+  {
+    data[0].removeMember(memberName);
+    try
+    {
+      CurrencyManager currencyManager(data);
+      EventSystem::Teardown();
+      EXPECT_FALSE(true);
+    }
+    catch(BadFileException) {}
+  }
 }
 
 TEST(CurrencyLoadTest, TemplateCoinLoadingTest)
@@ -63,6 +76,18 @@ TEST(CurrencyLoadTest, TemplateCoinLoadingTest)
   std::vector<CoinTemplate> coins;
   CurrencyTests::TestLoad(stream, root, coins);
   EXPECT_EQ(coins.size(), 3u);
+}
+
+TEST(CurrencyLoadTest, NoTemplateCoins)
+{
+  Json::Value nullValue;
+  try
+  {
+    CurrencyManager currencyManager(nullValue);
+    EventSystem::Teardown();
+    EXPECT_FALSE(true);
+  }
+  catch(BadFileException) {}
 }
 
 class CurrencyTestFixture : public testing::Test
@@ -79,6 +104,26 @@ public:
   virtual ~CurrencyTestFixture() {}
 };
 
+TEST_F(CurrencyTestFixture, BadCoinTest1)
+{
+  CurrencyTests::RemoveAndTest(root, "weight");
+}
+TEST_F(CurrencyTestFixture, BadCoinTest2)
+{
+  CurrencyTests::RemoveAndTest(root, "weightErrorPercentage");
+}
+TEST_F(CurrencyTestFixture, BadCoinTest3)
+{
+  CurrencyTests::RemoveAndTest(root, "radius");
+}
+TEST_F(CurrencyTestFixture, BadCoinTest4)
+{
+  CurrencyTests::RemoveAndTest(root, "radiusErrorPercentage");
+}
+TEST_F(CurrencyTestFixture, BadCoinTest5)
+{
+  CurrencyTests::RemoveAndTest(root, "value");
+}
 TEST_F(CurrencyTestFixture, CoinEquivilancyTestsNoVariance)
 {
   Json::Value testCoin;
