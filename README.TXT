@@ -19,7 +19,7 @@ New material since last review:
   a vending machine, the files should always exist; however, since you have clarified that tests should
   always be done, I have generated an exception to be used in order to subsequently be caught while
   the system is being initializing, if it is thrown, the display manager will only display OUT OF ORDER
-  till the system is reset.  
+  till the system is reset. This includes new tests.
  -New Post-Mordem thoughts section.
 
 
